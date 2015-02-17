@@ -1,0 +1,1 @@
+A manual of how our computer vision library works.
