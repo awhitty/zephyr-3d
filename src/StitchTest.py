@@ -188,7 +188,6 @@ if __name__ == "__main__":
   
   parser = ap.ArgumentParser()
   parser.add_argument('im1')
-  parser.add_argument('im2')
   parser.add_argument('-a', '--algorithm', 
                       help='feature detection algorithm',
                       choices=['SURF', 'SIFT'],
@@ -198,7 +197,7 @@ if __name__ == "__main__":
   ## Load images.
   image1 = cv2.imread(args.im1+"1.jpg")
   for i in range(2,7):
-  	  image2 = cv2.imread(args.im2 +str(i)+".jpg")
+  	  image2 = cv2.imread(args.im1 +str(i)+".jpg")
 	  ## Detect features and compute descriptors.
 	  (keypoints1, descriptors1) = extract_features(image2, algorithm=args.algorithm)
 	  (keypoints2, descriptors2) = extract_features(image1, algorithm=args.algorithm)
