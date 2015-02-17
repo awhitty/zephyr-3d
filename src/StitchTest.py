@@ -1,21 +1,3 @@
-# 
-# Offsetting 
-# the key: http://stackoverflow.com/questions/6087241/opencv-warpperspective
-#
-
-# For the ocean panorama, SIFT found a lot more features. This 
-# resulted in a much better stitching. (SURF only found 4 and it
-# warped considerably)
-
-# Test cases
-# python stitch.py Image1.jpg Image2.jpg -a SIFT
-# python stitch.py Image2.jpg Image1.jpg -a SIFT
-# python stitch.py ../stitcher/images/image_5.png ../stitcher/images/image_6.png -a SIFT
-# python stitch.py ../stitcher/images/image_6.png ../stitcher/images/image_5.png -a SIFT
-# python stitch.py ../vashon/01.JPG ../vashon/02.JPG -a SIFT
-# python stitch.py panorama_vashon2.jpg ../vashon/04.JPG -a SIFT
-# python stitch.py ../books/02.JPG ../books/03.JPG -a SIFT
-
 # coding: utf-8
 import cv2, numpy as np
 import math
@@ -38,10 +20,6 @@ def extract_features(image, surfThreshold=1000, algorithm='SURF'):
   
   kp = detector.detect(image_gs)
   (keypoints,descriptors) = descriptor.compute(image_gs,kp)
-  
-  ## TODO: (Overwrite the following 2 lines with your answer.)
-  # descriptors = np.array([[1,1], [7,5], [5,2], [3,4]], np.float32)
-  # keypoints = [cv2.KeyPoint(100 * x, 100 * y, 1) for (x,y) in descriptors]
 
   return (keypoints, descriptors)
 
@@ -54,11 +32,6 @@ def find_correspondences(keypoints1, descriptors1, keypoints2, descriptors2):
   
   points1 = np.array([keypoints1[i].pt for (i, j) in match], np.float32)
   points2 = np.array([keypoints2[j].pt for (i, j) in match], np.float32)
-  
-  ## TODO: Look up corresponding keypoints.
-  ## TODO: (Overwrite the following 2 lines with your answer.)
-  # points1 = np.array([k.pt for k in keypoints1], np.float32)
-  # points2 = np.array([k.pt for k in keypoints1], np.float32)
 
   return (points1, points2)
 
@@ -121,11 +94,6 @@ def calculate_size(size_image1, size_image2, homography):
     print size
     print 'Calculated offset:'
     print offset
-      
-  ## Update the homography to shift by the offset
-  # does offset need to be remapped to old coord space?
-  # print homography
-  # homography[0:2,2] += offset
 
   return (size, offset)
 
@@ -159,8 +127,6 @@ def merge_images(image1, image2, homography, size, offset, keypoints):
   panorama[oy:h1+oy, ox:ox+w1] = image1  
   # panorama[:h1, :w1] = image1  
 
-  ## TODO: Draw the common feature keypoints.
-
   return panorama
 
 def merge_images_translation(image1, image2, offset):
@@ -179,9 +145,6 @@ def merge_images_translation(image1, image2, offset):
   image[:h2, ox:ox+w2] = image2
   
   return image
-
-
-##---- No need to change anything below this point. ----------------------
 
 
 def match_flann(desc1, desc2, r_threshold = 0.12):
