@@ -4,10 +4,15 @@ from PIL import Image
 from PIL import ImageOps
 import ImageTk
 import cv2, numpy as np
+import argparse as ap
 f = open('centerPoints.txt','w')
 
 if __name__ == "__main__":
     root = Tk()
+    parser = ap.ArgumentParser()
+    parser.add_argument('im')
+
+    args = parser.parse_args()
 
     #setting up a tkinter canvas with scrollbars
     frame = Frame(root, bd=2, relief=SUNKEN)
@@ -24,8 +29,7 @@ if __name__ == "__main__":
     frame.pack(fill=BOTH,expand=1)
 
     #adding the image
-    File = askopenfilename(parent=root, initialdir="C:/",title='Choose an image.')
-    img = Image.open(File) 
+    img = Image.open(args.im) 
     img = ImageOps.mirror(img).transpose(2)
     img = ImageTk.PhotoImage(img)
     canvas.create_image(0,0,image=img,anchor="nw")
