@@ -2,16 +2,48 @@ import cv2, numpy as np
 from matplotlib import pyplot as plt
 import math
 import argparse as ap
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
 
+xPoints = []
+yPoints = []
+zPoints = []
 
 def getCenterPoints(centerPointsName):
 	centerPoints = []
 	with open(centerPointsName) as f:
 		for line in f:
 			nums = line.split()
-			centerPoints.append((int(float(nums[0])),int(float(nums[1]))))
+			centerPoints.append((int(float(nums[0])),int(float(nums[1])),int(float(nums[2]))))
 	return centerPoints
+
+def getHeight(x,y,centerPoints):
+	minDist = float("inf")
+	height = 0
+	for point in centerPoints:
+		dist = math.sqrt((point[0]-x)**2 + (point[1]-y)**2)
+		if dist < minDist:
+			height = point[2]
+			minDist = dist
+	return height
+
+def create3D(centerPoints):
+	for index in range(len(xPoints)):
+		zPoints.append(getHeight(xPoints[index],yPoints[index],centerPoints))
+	fig = plt.figure()
+	ax = fig.add_subplot(111, projection='3d')
+	ax.scatter(xPoints, yPoints, zPoints)
+	for index in range(len(xPoints)):
+		x = xPoints[index]
+		y = yPoints[index]
+		z = zPoints[index]
+		ax.plot([x,x],[y,y],[z,0])
+	plt.show()
+
 def fillPoint(row,col,image):
+	xPoints.append(row)
+	yPoints.append(col)
 	for x in range(-1,1):
 		for y in range(-1,1):
 			image[row + x][col+y] = 255
@@ -66,11 +98,12 @@ if __name__ == "__main__":
 	radialEdges = getEdges(edges,centerPoints)
 	radialEdges = cv2.GaussianBlur(radialEdges,(7,7),0)
 
-	plt.subplot(121),plt.imshow(img,cmap = 'gray')
-	plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-	# plt.subplot(122),plt.imshow(edges,cmap = 'gray')
-	# plt.title('Blur Image'), plt.xticks([]), plt.yticks([])
-	plt.subplot(122),plt.imshow(radialEdges,cmap = 'gray')
-	plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
+	create3D(centerPoints)
+	# plt.subplot(121),plt.imshow(img,cmap = 'gray')
+	# plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+	# # plt.subplot(122),plt.imshow(edges,cmap = 'gray')
+	# # plt.title('Blur Image'), plt.xticks([]), plt.yticks([])
+	# plt.subplot(122),plt.imshow(radialEdges,cmap = 'gray')
+	# plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
 
-	plt.show()
+	# plt.show()
