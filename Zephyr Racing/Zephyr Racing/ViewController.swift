@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         var track: TrackLog! = TrackLog(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
         view.addSubview(track)
         
+        
         var track2: TrackLog! = TrackLog(frame: CGRectMake(0, 102, view.frame.width, view.frame.height))
         track2.trackName = "Stent Raceways"
         track2.trackImage = UIImage(named: "track2.png")
