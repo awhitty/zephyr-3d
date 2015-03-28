@@ -13,6 +13,11 @@
 		1C3D49E61AAF681C00D7667C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C3D49E51AAF681C00D7667C /* Images.xcassets */; };
 		1C3D49E91AAF681C00D7667C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */; };
 		1C3D49F51AAF681C00D7667C /* Zephyr_RacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D49F41AAF681C00D7667C /* Zephyr_RacingTests.swift */; };
+		444193721AC3286D002C7F74 /* TrackLog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 444193711AC3286D002C7F74 /* TrackLog.xib */; };
+		444193741AC42231002C7F74 /* track1.png in Resources */ = {isa = PBXBuildFile; fileRef = 444193731AC42231002C7F74 /* track1.png */; };
+		444193761AC42799002C7F74 /* track2.png in Resources */ = {isa = PBXBuildFile; fileRef = 444193751AC42799002C7F74 /* track2.png */; };
+		444193781AC4279F002C7F74 /* track3.png in Resources */ = {isa = PBXBuildFile; fileRef = 444193771AC4279F002C7F74 /* track3.png */; };
+		4441937A1AC428F4002C7F74 /* TrackLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444193791AC428F4002C7F74 /* TrackLog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,11 @@
 		1C3D49EE1AAF681C00D7667C /* Zephyr RacingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Zephyr RacingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3D49F31AAF681C00D7667C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C3D49F41AAF681C00D7667C /* Zephyr_RacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zephyr_RacingTests.swift; sourceTree = "<group>"; };
+		444193711AC3286D002C7F74 /* TrackLog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackLog.xib; sourceTree = "<group>"; };
+		444193731AC42231002C7F74 /* track1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = track1.png; path = ../../../track1.png; sourceTree = "<group>"; };
+		444193751AC42799002C7F74 /* track2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = track2.png; path = ../../../track2.png; sourceTree = "<group>"; };
+		444193771AC4279F002C7F74 /* track3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = track3.png; path = ../../../track3.png; sourceTree = "<group>"; };
+		444193791AC428F4002C7F74 /* TrackLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackLog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +92,11 @@
 				1C3D49E21AAF681C00D7667C /* Main.storyboard */,
 				1C3D49E51AAF681C00D7667C /* Images.xcassets */,
 				1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */,
+				444193711AC3286D002C7F74 /* TrackLog.xib */,
+				444193791AC428F4002C7F74 /* TrackLog.swift */,
+				444193731AC42231002C7F74 /* track1.png */,
+				444193751AC42799002C7F74 /* track2.png */,
+				444193771AC4279F002C7F74 /* track3.png */,
 				1C3D49DC1AAF681C00D7667C /* Supporting Files */,
 			);
 			path = "Zephyr Racing";
@@ -192,8 +207,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				444193721AC3286D002C7F74 /* TrackLog.xib in Resources */,
 				1C3D49E41AAF681C00D7667C /* Main.storyboard in Resources */,
+				444193741AC42231002C7F74 /* track1.png in Resources */,
 				1C3D49E91AAF681C00D7667C /* LaunchScreen.xib in Resources */,
+				444193781AC4279F002C7F74 /* track3.png in Resources */,
+				444193761AC42799002C7F74 /* track2.png in Resources */,
 				1C3D49E61AAF681C00D7667C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +233,7 @@
 			files = (
 				1C3D49E11AAF681C00D7667C /* ViewController.swift in Sources */,
 				1C3D49DF1AAF681C00D7667C /* AppDelegate.swift in Sources */,
+				4441937A1AC428F4002C7F74 /* TrackLog.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +425,7 @@
 				1C3D49FA1AAF681C00D7667C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1C3D49FB1AAF681C00D7667C /* Build configuration list for PBXNativeTarget "Zephyr RacingTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +434,7 @@
 				1C3D49FD1AAF681C00D7667C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
