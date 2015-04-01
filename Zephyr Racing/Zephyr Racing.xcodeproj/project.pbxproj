@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C128C721AC32C2900851AE5 /* HomeScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C128C711AC32C2900851AE5 /* HomeScreen.xib */; };
+		1C128C761AC32E4D00851AE5 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C128C741AC32E4D00851AE5 /* HomeController.swift */; };
+		1C128C771AC32E4D00851AE5 /* HomeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C128C751AC32E4D00851AE5 /* HomeController.xib */; };
+		1C128C791AC3438800851AE5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C128C781AC3438800851AE5 /* HomeView.swift */; };
 		1C3D49DF1AAF681C00D7667C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D49DE1AAF681C00D7667C /* AppDelegate.swift */; };
 		1C3D49E11AAF681C00D7667C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D49E01AAF681C00D7667C /* ViewController.swift */; };
-		1C3D49E41AAF681C00D7667C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C3D49E21AAF681C00D7667C /* Main.storyboard */; };
 		1C3D49E61AAF681C00D7667C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C3D49E51AAF681C00D7667C /* Images.xcassets */; };
 		1C3D49E91AAF681C00D7667C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */; };
 		1C3D49F51AAF681C00D7667C /* Zephyr_RacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D49F41AAF681C00D7667C /* Zephyr_RacingTests.swift */; };
@@ -26,11 +29,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C128C711AC32C2900851AE5 /* HomeScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeScreen.xib; sourceTree = "<group>"; };
+		1C128C741AC32E4D00851AE5 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		1C128C751AC32E4D00851AE5 /* HomeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeController.xib; sourceTree = "<group>"; };
+		1C128C781AC3438800851AE5 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1C3D49D91AAF681C00D7667C /* Zephyr Racing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Zephyr Racing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3D49DD1AAF681C00D7667C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C3D49DE1AAF681C00D7667C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1C3D49E01AAF681C00D7667C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1C3D49E31AAF681C00D7667C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1C3D49E51AAF681C00D7667C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1C3D49E81AAF681C00D7667C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1C3D49EE1AAF681C00D7667C /* Zephyr RacingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Zephyr RacingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +62,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C128C731AC32C4300851AE5 /* XIB Views */ = {
+			isa = PBXGroup;
+			children = (
+				1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */,
+				1C128C711AC32C2900851AE5 /* HomeScreen.xib */,
+			);
+			name = "XIB Views";
+			sourceTree = "<group>";
+		};
 		1C3D49D01AAF681C00D7667C = {
 			isa = PBXGroup;
 			children = (
@@ -79,10 +94,12 @@
 			children = (
 				1C3D49DE1AAF681C00D7667C /* AppDelegate.swift */,
 				1C3D49E01AAF681C00D7667C /* ViewController.swift */,
-				1C3D49E21AAF681C00D7667C /* Main.storyboard */,
+				1C128C741AC32E4D00851AE5 /* HomeController.swift */,
+				1C128C751AC32E4D00851AE5 /* HomeController.xib */,
 				1C3D49E51AAF681C00D7667C /* Images.xcassets */,
-				1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */,
+				1C128C731AC32C4300851AE5 /* XIB Views */,
 				1C3D49DC1AAF681C00D7667C /* Supporting Files */,
+				1C128C781AC3438800851AE5 /* HomeView.swift */,
 			);
 			path = "Zephyr Racing";
 			sourceTree = "<group>";
@@ -192,7 +209,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C3D49E41AAF681C00D7667C /* Main.storyboard in Resources */,
+				1C128C771AC32E4D00851AE5 /* HomeController.xib in Resources */,
+				1C128C721AC32C2900851AE5 /* HomeScreen.xib in Resources */,
 				1C3D49E91AAF681C00D7667C /* LaunchScreen.xib in Resources */,
 				1C3D49E61AAF681C00D7667C /* Images.xcassets in Resources */,
 			);
@@ -213,7 +231,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C3D49E11AAF681C00D7667C /* ViewController.swift in Sources */,
+				1C128C791AC3438800851AE5 /* HomeView.swift in Sources */,
 				1C3D49DF1AAF681C00D7667C /* AppDelegate.swift in Sources */,
+				1C128C761AC32E4D00851AE5 /* HomeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,14 +256,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1C3D49E21AAF681C00D7667C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1C3D49E31AAF681C00D7667C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -405,6 +417,7 @@
 				1C3D49FA1AAF681C00D7667C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1C3D49FB1AAF681C00D7667C /* Build configuration list for PBXNativeTarget "Zephyr RacingTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +426,7 @@
 				1C3D49FD1AAF681C00D7667C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
