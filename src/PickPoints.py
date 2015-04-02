@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     #adding the image
     img = Image.open(args.im) 
-    img = ImageOps.mirror(img).transpose(2)
+    #img = ImageOps.mirror(img).transpose(2)
     img = ImageTk.PhotoImage(img)
     canvas.create_image(0,0,image=img,anchor="nw")
     canvas.config(scrollregion=canvas.bbox(ALL))

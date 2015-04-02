@@ -16,9 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+<<<<<<< HEAD
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.whiteColor()
         self.mainViewController = HomeController()
+=======
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window!.backgroundColor = UIColor.whiteColor()
+        self.mainViewController = ViewController()
+>>>>>>> 1fd29a3656a04d33c1cf535c9c05be34b7704c34
         
         self.window!.rootViewController = self.mainViewController
         self.window!.makeKeyAndVisible()
