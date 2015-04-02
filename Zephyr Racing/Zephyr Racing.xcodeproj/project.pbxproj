@@ -16,6 +16,11 @@
 		1C3D49E61AAF681C00D7667C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C3D49E51AAF681C00D7667C /* Images.xcassets */; };
 		1C3D49E91AAF681C00D7667C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */; };
 		1C3D49F51AAF681C00D7667C /* Zephyr_RacingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3D49F41AAF681C00D7667C /* Zephyr_RacingTests.swift */; };
+		443424401AC6C2660032C649 /* track2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4434243D1AC6C2660032C649 /* track2.png */; };
+		443424411AC6C2660032C649 /* track3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4434243E1AC6C2660032C649 /* track3.png */; };
+		443424421AC6C2660032C649 /* track1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4434243F1AC6C2660032C649 /* track1.png */; };
+		444193721AC3286D002C7F74 /* TrackLog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 444193711AC3286D002C7F74 /* TrackLog.xib */; };
+		4441937A1AC428F4002C7F74 /* TrackLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444193791AC428F4002C7F74 /* TrackLog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +47,11 @@
 		1C3D49EE1AAF681C00D7667C /* Zephyr RacingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Zephyr RacingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3D49F31AAF681C00D7667C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C3D49F41AAF681C00D7667C /* Zephyr_RacingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zephyr_RacingTests.swift; sourceTree = "<group>"; };
+		4434243D1AC6C2660032C649 /* track2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = track2.png; sourceTree = "<group>"; };
+		4434243E1AC6C2660032C649 /* track3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = track3.png; sourceTree = "<group>"; };
+		4434243F1AC6C2660032C649 /* track1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = track1.png; sourceTree = "<group>"; };
+		444193711AC3286D002C7F74 /* TrackLog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackLog.xib; sourceTree = "<group>"; };
+		444193791AC428F4002C7F74 /* TrackLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackLog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,12 +102,19 @@
 		1C3D49DB1AAF681C00D7667C /* Zephyr Racing */ = {
 			isa = PBXGroup;
 			children = (
+				4434243C1AC6C21A0032C649 /* images */,
 				1C3D49DE1AAF681C00D7667C /* AppDelegate.swift */,
 				1C3D49E01AAF681C00D7667C /* ViewController.swift */,
 				1C128C741AC32E4D00851AE5 /* HomeController.swift */,
 				1C128C751AC32E4D00851AE5 /* HomeController.xib */,
 				1C3D49E51AAF681C00D7667C /* Images.xcassets */,
+<<<<<<< HEAD
 				1C128C731AC32C4300851AE5 /* XIB Views */,
+=======
+				1C3D49E71AAF681C00D7667C /* LaunchScreen.xib */,
+				444193711AC3286D002C7F74 /* TrackLog.xib */,
+				444193791AC428F4002C7F74 /* TrackLog.swift */,
+>>>>>>> 1fd29a3656a04d33c1cf535c9c05be34b7704c34
 				1C3D49DC1AAF681C00D7667C /* Supporting Files */,
 				1C128C781AC3438800851AE5 /* HomeView.swift */,
 			);
@@ -127,6 +144,16 @@
 				1C3D49F31AAF681C00D7667C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4434243C1AC6C21A0032C649 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				4434243D1AC6C2660032C649 /* track2.png */,
+				4434243E1AC6C2660032C649 /* track3.png */,
+				4434243F1AC6C2660032C649 /* track1.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,10 +236,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				1C128C771AC32E4D00851AE5 /* HomeController.xib in Resources */,
 				1C128C721AC32C2900851AE5 /* HomeScreen.xib in Resources */,
+=======
+				444193721AC3286D002C7F74 /* TrackLog.xib in Resources */,
+				1C3D49E41AAF681C00D7667C /* Main.storyboard in Resources */,
+				443424401AC6C2660032C649 /* track2.png in Resources */,
+				443424411AC6C2660032C649 /* track3.png in Resources */,
+>>>>>>> 1fd29a3656a04d33c1cf535c9c05be34b7704c34
 				1C3D49E91AAF681C00D7667C /* LaunchScreen.xib in Resources */,
 				1C3D49E61AAF681C00D7667C /* Images.xcassets in Resources */,
+				443424421AC6C2660032C649 /* track1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,7 +268,11 @@
 				1C3D49E11AAF681C00D7667C /* ViewController.swift in Sources */,
 				1C128C791AC3438800851AE5 /* HomeView.swift in Sources */,
 				1C3D49DF1AAF681C00D7667C /* AppDelegate.swift in Sources */,
+<<<<<<< HEAD
 				1C128C761AC32E4D00851AE5 /* HomeController.swift in Sources */,
+=======
+				4441937A1AC428F4002C7F74 /* TrackLog.swift in Sources */,
+>>>>>>> 1fd29a3656a04d33c1cf535c9c05be34b7704c34
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
