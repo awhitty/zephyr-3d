@@ -5,6 +5,7 @@ import argparse as ap
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
+import TrackEdges
 
 xPoints = []
 yPoints = []
@@ -16,6 +17,7 @@ def getCenterPoints(centerPointsName):
 		for line in f:
 			nums = line.split()
 			centerPoints.append((int(float(nums[0])),int(float(nums[1])),int(float(nums[2]))))
+			#centerPoints.append((int(float(nums[1])),int(float(nums[0]))))
 	return centerPoints
 
 def getHeight(x,y,centerPoints):
@@ -28,25 +30,42 @@ def getHeight(x,y,centerPoints):
 			minDist = dist
 	return height
 
+def createOrdered3D(centerPoints,edgeSets):
+	fig = plt.figure()
+	ax = fig.add_subplot(111, projection='3d')
+	for edgeSet in edgeSets:
+		xArr = []
+		yArr = []
+		zArr = []
+		for point in edgeSet:
+			xArr.append(point[0])
+			yArr.append(point[1])
+			zArr.append(getHeight(point[0],point[1],centerPoints))
+		ax.plot(xArr,yArr,zArr,color = 'b')
+	plt.show()
+
+
 def create3D(centerPoints):
 	for index in range(len(xPoints)):
 		zPoints.append(getHeight(xPoints[index],yPoints[index],centerPoints))
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
-	ax.scatter(xPoints, yPoints, zPoints)
+	ax.scatter(xPoints,yPoints,zPoints)
 	for index in range(len(xPoints)):
 		x = xPoints[index]
 		y = yPoints[index]
 		z = zPoints[index]
-		ax.plot([x,x],[y,y],[z,0])
+		ax.plot([x,x],[y,y],[z,0], color = 'b')
+
 	plt.show()
 
 def fillPoint(row,col,image):
 	xPoints.append(row)
 	yPoints.append(col)
-	for x in range(-1,1):
-		for y in range(-1,1):
-			image[row + x][col+y] = 255
+	image[row][col] = 255
+	# for x in range(-1,1):
+	# 	for y in range(-1,1):
+	# 		image[row + x][col+y] = 255
 
 def checkRay(point,edgeImage,image,angle):
 	xMax = image.shape[0]
@@ -71,7 +90,7 @@ def radialEdgeDetection(point,edgeImage,image):
 	# check225(point,edgeImage,image)
 	# check270(point,edgeImage,image)
 	# check315(point,edgeImage,image)
-	for angle in range(0,360,5):
+	for angle in range(0,360,1):
 		checkRay(point,edgeImage,image,math.radians(angle))
 
 def getEdges(image, centerPoints):
@@ -98,12 +117,15 @@ if __name__ == "__main__":
 	radialEdges = getEdges(edges,centerPoints)
 	radialEdges = cv2.GaussianBlur(radialEdges,(7,7),0)
 
-	create3D(centerPoints)
-	# plt.subplot(121),plt.imshow(img,cmap = 'gray')
-	# plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+	plt.subplot(121),plt.imshow(img,cmap = 'gray')
+	plt.title('Original Image'), plt.xticks([]), plt.yticks([])
 	# # plt.subplot(122),plt.imshow(edges,cmap = 'gray')
 	# # plt.title('Blur Image'), plt.xticks([]), plt.yticks([])
-	# plt.subplot(122),plt.imshow(radialEdges,cmap = 'gray')
-	# plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
+	plt.subplot(122),plt.imshow(radialEdges,cmap = 'gray')
+	plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
 
-	# plt.show()
+	plt.show()
+	trackEdges = TrackEdges.TrackEdges(radialEdges)
+	trackEdges.createEdgeSets()
+	edgeSets = trackEdges.orderEdgePixels()
+	createOrdered3D(centerPoints,edgeSets)
