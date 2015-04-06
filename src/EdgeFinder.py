@@ -22,15 +22,24 @@ def getCenterPoints(centerPointsName):
 
 def getHeight(x,y,centerPoints):
 	minDist = float("inf")
-	height = 0
+	secondDist = float("inf")
+	minHeight = 0
+	secondHeight = 0
 	for point in centerPoints:
 		dist = math.sqrt((point[0]-x)**2 + (point[1]-y)**2)
 		if dist < minDist:
-			height = point[2]
+			secondDist = minDist
+			secondHeight = minHeight
+			minHeight = point[2]
 			minDist = dist
+		elif dist < secondDist:
+			secondHeight = point[2]
+			secondDist = dist
+	height = secondHeight*(1  - (1/(1 + (minDist/secondDist)**4))) + minHeight*(1/(1 + (minDist/secondDist)**4))
 	return height
 
 def createOrdered3D(centerPoints,edgeSets):
+	f = open('trackPoints.txt', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
@@ -40,7 +49,9 @@ def createOrdered3D(centerPoints,edgeSets):
 		for point in edgeSet:
 			xArr.append(point[0])
 			yArr.append(point[1])
-			zArr.append(getHeight(point[0],point[1],centerPoints))
+			height = getHeight(point[0],point[1],centerPoints)
+			zArr.append(height)
+			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height)+"\n")
 		ax.plot(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
@@ -115,7 +126,7 @@ if __name__ == "__main__":
 	edges = cv2.Canny(edges,200,200)
 	edges = cv2.GaussianBlur(edges,(5,5),0)
 	radialEdges = getEdges(edges,centerPoints)
-	radialEdges = cv2.GaussianBlur(radialEdges,(7,7),0)
+	#radialEdges = cv2.GaussianBlur(radialEdges,(3,3),0)
 
 	plt.subplot(121),plt.imshow(img,cmap = 'gray')
 	plt.title('Original Image'), plt.xticks([]), plt.yticks([])
