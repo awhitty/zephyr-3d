@@ -51,7 +51,7 @@ def createOrdered3D(centerPoints,edgeSets):
 			yArr.append(point[1])
 			height = getHeight(point[0],point[1],centerPoints)
 			zArr.append(height)
-			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height)+"\n")
+			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*10)+"\n")
 		ax.plot(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
