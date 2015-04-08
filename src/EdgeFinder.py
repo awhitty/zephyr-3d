@@ -67,8 +67,8 @@ def createScatter3D(centerPoints,edgeSets):
 			xArr.append(point[0])
 			yArr.append(point[1])
 			height = getHeight(point[0],point[1],centerPoints)
-			#zArr.append(height)
-			zArr.append(0)
+			height = 0
+			zArr.append(height)
 			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*10)+"\n")
 		ax.scatter(xArr,yArr,zArr,color = 'b')
 	plt.show()
