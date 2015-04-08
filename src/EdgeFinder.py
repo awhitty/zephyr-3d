@@ -39,7 +39,7 @@ def getHeight(x,y,centerPoints):
 	return height
 
 def createOrdered3D(centerPoints,edgeSets):
-	f = open('trackPoints.txt', 'w')
+	f = open('trackPoints.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
@@ -53,6 +53,23 @@ def createOrdered3D(centerPoints,edgeSets):
 			zArr.append(height)
 			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*10)+"\n")
 		ax.plot(xArr,yArr,zArr,color = 'b')
+	plt.show()
+
+def createScatter3D(centerPoints,edgeSets):
+	f = open('trackPoints.xyz', 'w')
+	fig = plt.figure()
+	ax = fig.add_subplot(111, projection='3d')
+	for edgeSet in edgeSets:
+		xArr = []
+		yArr = []
+		zArr = []
+		for point in edgeSet:
+			xArr.append(point[0])
+			yArr.append(point[1])
+			height = getHeight(point[0],point[1],centerPoints)
+			zArr.append(height)
+			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*10)+"\n")
+		ax.scatter(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
 
@@ -86,6 +103,7 @@ def checkRay(point,edgeImage,image,angle):
 	x+=math.sin(angle)
 	y+=math.cos(angle)
 	while x > 0 and x < xMax and y > 0 and y < yMax:
+		fillPoint(int(x),int(y),edgeImage)
 		if image[int(x)][int(y)] > 10:
 			fillPoint(int(x),int(y),edgeImage)
 			return
@@ -139,4 +157,5 @@ if __name__ == "__main__":
 	trackEdges = TrackEdges.TrackEdges(radialEdges)
 	trackEdges.createEdgeSets()
 	edgeSets = trackEdges.orderEdgePixels()
-	createOrdered3D(centerPoints,edgeSets)
+	createScatter3D(centerPoints,edgeSets)
+	#createOrdered3D(centerPoints,edgeSets)
