@@ -36,7 +36,7 @@ def getHeight(x,y,centerPoints):
 			secondHeight = point[2]
 			secondDist = dist
 	height = secondHeight*(1  - (1/(1 + (minDist/secondDist)**4))) + minHeight*(1/(1 + (minDist/secondDist)**4))
-	return height
+	return minHeight
 
 def createOrdered3D(centerPoints,edgeSets):
 	f = open('trackPoints.xyz', 'w')
@@ -67,7 +67,8 @@ def createScatter3D(centerPoints,edgeSets):
 			xArr.append(point[0])
 			yArr.append(point[1])
 			height = getHeight(point[0],point[1],centerPoints)
-			zArr.append(height)
+			#zArr.append(height)
+			zArr.append(0)
 			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*10)+"\n")
 		ax.scatter(xArr,yArr,zArr,color = 'b')
 	plt.show()
