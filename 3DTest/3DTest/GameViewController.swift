@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/trackwithfill.dae")!
+        let scene = SCNScene(named: "art.scnassets/trackwithfill")!
         
         // create and add a camera to the scene
         let cameraNode = SCNNode()
@@ -24,7 +24,8 @@ class GameViewController: UIViewController {
         scene.rootNode.addChildNode(cameraNode)
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 100)
+        cameraNode.position = SCNVector3(x: 10, y: 1, z: 20)
+        cameraNode.rotation = SCNVector4Make(0, 0, 0, 1.5)
         
         // create and add a light to the scene
         let lightNode = SCNNode()
@@ -32,7 +33,7 @@ class GameViewController: UIViewController {
         lightNode.light!.type = SCNLightTypeOmni
 //        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
         lightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
-        lightNode.position = SCNVector3Make(0, 50, 50)
+        lightNode.position = SCNVector3Make(0, 10, 50)
         scene.rootNode.addChildNode(lightNode)
         
         // create and add an ambient light to the scene
@@ -44,6 +45,7 @@ class GameViewController: UIViewController {
         
         // retrieve the ship node
         let ship = scene.rootNode.childNodeWithName("node", recursively: true)!
+        ship.scale = SCNVector3(x: 0.02, y: 0.02, z: 0.02)
         
         // animate the 3d object
 //        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1)))
