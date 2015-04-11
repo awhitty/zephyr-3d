@@ -12,6 +12,7 @@ class TrackEdges():
 		self.image = edgeImage
 		self.edgeSets = []
 		self.edgePixels = Set()
+		self.includedPixels = Set()
 		self.xMax = self.image.shape[0]
 		self.yMax = self.image.shape[1]
 		for row in range(self.xMax):
@@ -19,11 +20,65 @@ class TrackEdges():
 				if self.image[int(row)][int(col)] > 10:
 					self.edgePixels.add((row,col))
 
+	def isValid(self,row,col):
+		for x in range(-11,11):
+			for y in range(-11,11):
+				if (row + x, col + y) in self.includedPixels: 
+					return False
+		return (row,col) in self.edgePixels
+
 	def createEdgeSets(self):
 		edges = self.edgePixels.copy()
 		while len(edges) > 0:
 			pixel = edges.pop()
-			self.edgeSets.append(self.getEdgeSet(edges,pixel))
+			if self.isValid(pixel[0],pixel[1]): 
+				self.edgeSets.append(self.getEdgeSet(edges,pixel))
+
+	def isValid(self,row,col):
+		for x in range(-11,11):
+			for y in range(-11,11):
+				if (row + x, col + y) in self.includedPixels: 
+					return False
+		return (row,col) in self.edgePixels
+
+	def getEdgeSetWithoutOverlap(self,edges,pixel):
+		edgePixels = []
+		row = pixel[0]
+		col = pixel[1]
+		edgePixels.append(pixel)
+		exhaustedSearch = False
+		direction = 0
+		while not exhaustedSearch:
+			leftDir = direction + 90
+			leftX = row + round(math.cos(math.radians(leftDir)))
+			leftY = col + round(math.sin(math.radians(leftDir)))
+			if not self.isValid(leftX,leftY):
+				exhaustedSearch = True
+				for angle in range(-45,135,45):
+					newDir = direction - angle
+					newX = row + round(math.cos(math.radians(newDir)))
+					newY = col + round(math.sin(math.radians(newDir)))
+					if self.isValid(newX,newY):
+						direction = newDir
+						row = newX
+						col = newY
+						self.edgePixels.discard((row,col))
+						edgePixels.append((row,col))
+						exhaustedSearch = False
+						break
+			else:
+				frontDir = direction
+				frontX = row + round(math.cos(math.radians(frontDir)))
+				frontY = col + round(math.sin(math.radians(frontDir)))
+				if self.isValid(frontX,frontY):
+					row = frontX
+					col = frontY
+				else:
+					direction -= 45
+
+		for pixel in edgePixels:
+			self.includedPixels.add(pixel)
+		return edgePixels
 
 	def getEdgeSet(self,edges,pixel):
 		edgePixels = []
@@ -31,42 +86,43 @@ class TrackEdges():
 		col = pixel[1]
 		edgePixels.append(pixel)
 		exhaustedSearch = False
+		direction = 0
 		while not exhaustedSearch:
-			if self.image[row-1][col-1] > 10 and (row-1,col-1) in edges:
+			if self.image[row-1][col-1] > 1 and (row-1,col-1) in self.edgePixels:
 				row -= 1
 				col -= 1
-				edges.discard((row,col))
+				self.edgePixels.discard((row,col))
 				edgePixels.append((row,col))
-			elif self.image[row-1][col] > 10 and (row-1,col) in edges:
+			elif self.image[row-1][col] > 1 and (row-1,col) in self.edgePixels:
 				row -= 1
-				edges.discard((row,col))
+				self.edgePixels.discard((row,col))
 				edgePixels.append((row,col))
-			elif self.image[row-1][col+1] > 10 and (row-1,col+1) in edges:
+			elif self.image[row-1][col+1] > 1 and (row-1,col+1) in self.edgePixels:
 				row -= 1
 				col += 1
-				edges.discard((row,col))
+				self.edgePixels.discard((row,col))
 				edgePixels.append((row,col))
-			elif self.image[row][col-1] > 10 and (row,col-1) in edges:
-				col -= 1
-				edges.discard((row,col))
-				edgePixels.append((row,col))
-			elif self.image[row][col+1] > 10 and (row,col+1) in edges:
+			elif self.image[row][col+1] > 1 and (row,col+1) in self.edgePixels:
 				col += 1
-				edges.discard((row,col))
+				self.edgePixels.discard((row,col))
 				edgePixels.append((row,col))
-			elif self.image[row+1][col-1] > 10 and (row+1,col-1) in edges:
-				row += 1
-				col -= 1
-				edges.discard((row,col))
-				edgePixels.append((row,col))
-			elif self.image[row+1][col] > 10 and (row+1,col) in edges:
-				row += 1
-				edges.discard((row,col))
-				edgePixels.append((row,col))
-			elif self.image[row+1][col+1] > 10 and (row+1,col+1) in edges:
+			elif self.image[row+1][col+1] > 1 and (row+1,col+1) in self.edgePixels:
 				row += 1
 				col += 1
-				edges.discard((row,col))
+				self.edgePixels.discard((row,col))
+				edgePixels.append((row,col))
+			elif self.image[row+1][col] > 1 and (row+1,col) in self.edgePixels:
+				row += 1
+				self.edgePixels.discard((row,col))
+				edgePixels.append((row,col))
+			elif self.image[row+1][col-1] > 1 and (row+1,col-1) in self.edgePixels:
+				row += 1
+				col -= 1
+				self.edgePixels.discard((row,col))
+				edgePixels.append((row,col))
+			elif self.image[row][col-1] > 1 and (row,col-1) in self.edgePixels:
+				col -= 1
+				self.edgePixels.discard((row,col))
 				edgePixels.append((row,col))
 			else: exhaustedSearch = True
 		return edgePixels

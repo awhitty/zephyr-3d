@@ -2,10 +2,12 @@ import cv2, numpy as np
 from matplotlib import pyplot as plt
 import math
 import argparse as ap
+from scipy.ndimage import gaussian_filter1d
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import TrackEdges
+from sets import Set
 
 xPoints = []
 yPoints = []
@@ -13,10 +15,13 @@ zPoints = []
 
 def getCenterPoints(centerPointsName):
 	centerPoints = []
+	seenPoints = Set()
 	with open(centerPointsName) as f:
 		for line in f:
 			nums = line.split()
-			centerPoints.append((int(float(nums[0])),int(float(nums[1])),int(float(nums[2]))))
+			if ((int(float(nums[0])),int(float(nums[1])))) in seenPoints: continue
+			centerPoints.append((int(float(nums[0])),int(float(nums[1])),float(nums[2])))
+			seenPoints.add(((int(float(nums[0])),int(float(nums[1])))))
 			#centerPoints.append((int(float(nums[1])),int(float(nums[0]))))
 	return centerPoints
 
@@ -52,6 +57,16 @@ def createOrdered3D(centerPoints,edgeSets):
 			height = getHeight(point[0],point[1],centerPoints)
 			zArr.append(height)
 			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*10)+"\n")
+		t = np.linspace(0, 1, len(zArr))
+		t2 = np.linspace(0, 1, len(zArr))
+
+		x2 = np.interp(t2, t, xArr)
+		y2 = np.interp(t2, t, yArr)
+		z2 = np.interp(t2, t, zArr)
+		sigma = 10
+		x3 = gaussian_filter1d(x2, sigma)
+		y3 = gaussian_filter1d(y2, sigma)
+		z3 = gaussian_filter1d(z2, sigma)
 		ax.plot(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
@@ -67,7 +82,6 @@ def createScatter3D(centerPoints,edgeSets):
 			xArr.append(point[0])
 			yArr.append(point[1])
 			height = getHeight(point[0],point[1],centerPoints)
-			height = 0
 			zArr.append(height)
 			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*10)+"\n")
 		ax.scatter(xArr,yArr,zArr,color = 'b')
@@ -145,7 +159,11 @@ if __name__ == "__main__":
 	edges = cv2.Canny(edges,200,200)
 	edges = cv2.GaussianBlur(edges,(5,5),0)
 	radialEdges = getEdges(edges,centerPoints)
-	#radialEdges = cv2.GaussianBlur(radialEdges,(3,3),0)
+	radialEdges = cv2.GaussianBlur(radialEdges,(3,3),0)
+	for row in range(radialEdges.shape[0]):
+		for col in range(radialEdges.shape[1]):
+			if radialEdges[row][col] > 1: radialEdges[row][col] = 255
+	#radialEdges = cv2.GaussianBlur(radialEdges,(5,5),0)
 
 	plt.subplot(121),plt.imshow(img,cmap = 'gray')
 	plt.title('Original Image'), plt.xticks([]), plt.yticks([])
