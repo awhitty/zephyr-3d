@@ -24,28 +24,42 @@ class GameViewController: UIViewController {
         scene.rootNode.addChildNode(cameraNode)
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 10, y: 1, z: 20)
+        cameraNode.position = SCNVector3(x: 0, y: 1, z: 20)
         cameraNode.rotation = SCNVector4Make(0, 0, 0, 1.5)
         
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
         lightNode.light!.type = SCNLightTypeOmni
-//        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
-        lightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
-        lightNode.position = SCNVector3Make(0, 10, 50)
+        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
+        lightNode.light!.color = UIColor(white: 0.95, alpha: 1.0)
+//        lightNode.position = SCNVector3Make(0, 1, 50)
         scene.rootNode.addChildNode(lightNode)
         
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = SCNLightTypeAmbient
-        ambientLightNode.light!.color = UIColor.darkGrayColor()
-        scene.rootNode.addChildNode(ambientLightNode)
+        ambientLightNode.light!.color = UIColor.yellowColor()
+//        scene.rootNode.addChildNode(ambientLightNode)
+        
+        let floor = SCNFloor()
+        let floorNode = SCNNode(geometry: floor)
+        floorNode.position.y = -2.5
+        floor.reflectivity = 0
+        
+        let floorMaterial = SCNMaterial()
+        floorMaterial.diffuse.contents  = UIColor.greenColor()
+        floorMaterial.locksAmbientWithDiffuse   = true
+        floor.materials = [floorMaterial]
+        
+        scene.rootNode.addChildNode(floorNode)
         
         // retrieve the ship node
         let ship = scene.rootNode.childNodeWithName("node", recursively: true)!
         ship.scale = SCNVector3(x: 0.02, y: 0.02, z: 0.02)
+        ship.position = SCNVector3(x: -10, y: 0, z: 0)
+        ship.rotation = SCNVector4Make(1, 0, 0, CFloat( -M_PI_4 ) * 2)
         
         // animate the 3d object
 //        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1)))
