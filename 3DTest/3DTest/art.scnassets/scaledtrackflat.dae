@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+ <asset>
+  <contributor>
+   <authoring_tool>SceneKit Collada Exporter v1.0</authoring_tool>
+  </contributor>
+  <created>2015-04-09T03:06:19Z</created>
+  <modified>2015-04-09T03:06:19Z</modified>
+  <unit meter="1.000000"/>
+  <up_axis>Z_UP</up_axis>
+ </asset>
+ <library_cameras>
+  <camera id="Camera-camera" name="Camera">
+   <optics>
+    <technique_common>
+     <perspective>
+      <xfov>49.1343</xfov>
+      <znear>0.1</znear>
+      <zfar>100</zfar>
+     </perspective>
+    </technique_common>
+   </optics>
+   <extra>
+    <technique profile="SceneKit">
+     <depth_of_field>
+      <focal_depth>10</focal_depth>
+      <sample_radius>0</sample_radius>
+      <focal_size>0</focal_size>
+      <focal_aperture>0.125</focal_aperture>
+     </depth_of_field>
+    </technique>
+   </extra>
+  </camera>
+ </library_cameras>
+ <library_lights>
+  <light id="Lamp-light" name="Lamp">
+   <technique_common>
+    <point>
+     <color>1 1 1</color>
+     <constant_attenuation>0</constant_attenuation>
+     <linear_attenuation>0</linear_attenuation>
+     <quadratic_attenuation>1</quadratic_attenuation>
+    </point>
+   </technique_common>
+   <extra>
+    <technique profile="SceneKit">
+     <attenuationStart>0</attenuationStart>
+     <attenuationEnd>0</attenuationEnd>
+     <attenuationFalloffExponent>2</attenuationFalloffExponent>
+    </technique>
+   </extra>
+  </light>
+ </library_lights>
+ <library_geometries>
+  <geometry id="ShapeIndexedFaceSet-mesh" name="ShapeIndexedFaceSet">
+   <extra>
+    <technique profile="SceneKit">
+     <double_sided>1</double_sided>
+    </technique>
+   </extra>
+   <mesh>
+    <source id="ShapeIndexedFaceSet-mesh-positions">
+     <float_array id="ID1-array" count="0"/>
+     <technique_common>
+      <accessor source="#ID1-array" count="0" stride="3">
+       <param name="X" type="float"/>
+       <param name="Y" type="float"/>
+       <param name="Z" type="float"/>
+      </accessor>
+     </technique_common>
+    </source>
+    <vertices id="ShapeIndexedFaceSet-mesh-positions-vertices">
+     <input semantic="POSITION" source="#ShapeIndexedFaceSet-mesh-positions"/>
+    </vertices>
+    <triangles count="0">
+     <input semantic="VERTEX" offset="0" source="#ShapeIndexedFaceSet-mesh-positions-vertices"/>
+    </triangles>
+   </mesh>
+  </geometry>
+ </library_geometries>
+ <library_visual_scenes>
+  <visual_scene id="scene2">
+   <node id="Camera" name="Camera">
+    <matrix>0.6858805 -0.3173701 0.6548619 7.481132 0.7276338 0.3124686 -0.6106656 -6.50764 -0.01081678 0.8953432 0.4452454 5.343665 0 0 0 1 </matrix>
+    <instance_camera url="#Camera-camera"/>
+   </node>
+   <node id="Lamp" name="Lamp">
+    <matrix>-0.2908646 -0.7711008 0.5663932 4.076245 0.9551712 -0.1998834 0.2183912 1.005454 -0.05518906 0.6045247 0.7946723 5.903862 0 0 0 1 </matrix>
+    <instance_light url="#Lamp-light"/>
+   </node>
+   <node id="ShapeIndexedFaceSet" name="ShapeIndexedFaceSet">
+    <matrix>-0.01176643 0.002956243 -0.001378551 2.919317 -0.002805123 -0.01180425 -0.001370974 0.5230887 -0.001664651 -0.001004446 0.0120544 1.974551 0 0 0 1 </matrix>
+    <instance_geometry url="#ShapeIndexedFaceSet-mesh"/>
+   </node>
+  </visual_scene>
+ </library_visual_scenes>
+ <scene>
+  <instance_visual_scene url="#scene2"/>
+ </scene>
+</COLLADA>
