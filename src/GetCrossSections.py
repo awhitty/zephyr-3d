@@ -63,6 +63,7 @@ def getCrossSections(img,centerPoints):
 		if not oppositeEdge: continue
 		midpointX = (nearestEdge[0] + oppositeEdge[0])/2
 		midpointY = (nearestEdge[1] + oppositeEdge[1])/2
+		img[midpointX][midpointY] = [255,255,255]
 		dist = math.sqrt((nearestEdge[0] - oppositeEdge[0])**2 + (nearestEdge[1] - oppositeEdge[1])**2)
 		crossSections.append((midpointX,midpointY,dist,oppositeEdge[2]))
 	return crossSections
@@ -77,6 +78,7 @@ if __name__ == "__main__":
 	## Load images.
 	img = cv2.imread(args.im)
 	crossSections = getCrossSections(img,centerPoints)
+	cv2.imwrite("centerPoints.jpg",img)
 	f = open("crossSections.txt","w")
 	for crossSection in crossSections:
 		f.write(str(crossSection[0]) + " " + str(crossSection[1]) + " " + str(crossSection[2]) + " " + str(crossSection[3]) + "\n")
