@@ -4,6 +4,8 @@ import math
 import Queue
 from sets import Set
 
+currentAngle = 0
+
 def getCenterPoints(centerPointsName):
 	centerPoints = []
 	seenPoints = Set()
@@ -19,38 +21,50 @@ def getCenterPoints(centerPointsName):
 def getNearestEdge(point,img):
 	x = point[0]
 	y = point[1]
+	global currentAngle
 	queue = Queue.Queue()
 	for angle in range(360):
-		queue.put((math.radians(angle),1))
+		queue.put((math.radians(currentAngle + angle),0.1))
 	while not queue.empty():
 		ray = queue.get()
 		row = x + math.sin(ray[0])*ray[1]
 		col = y + math.cos(ray[0])*ray[1]
 		if img[int(row)][int(col)][0] > 10:
-			return (int(row),int(col))
-		queue.put((ray[0], ray[1]+1))
+			currentAngle = ray[0]
+			return (int(row),int(col),ray[0])
+		queue.put((ray[0], ray[1]+0.1))
 
 def getOppositeEdge(point,nearestEdge,img):
-	if point[0] == nearestEdge[0]:
-		slope = 1
-	else: 
-		slope = (point[1]-nearestEdge[1])/float(point[0]-nearestEdge[0])
-	signX = 1
-	signY = 1
-	if (point[0]-nearestEdge[0]) < 0: 
-		signX = -1
-		signY = -1
-	if (point[0]-nearestEdge[0]) == 0:
-		signX = 0
-		if (point[1]-nearestEdge[1]) < 0:
-			signY = -1
-	x = point[0] + signX
-	y = point[1] + slope*signY
-	while  x >= 0 and x < img.shape[0] and y >= 0 and y < img.shape[1]:
+	(x,y,angle) = nearestEdge
+	angle += math.radians(180)
+	dist = 1
+	x += math.sin(angle)*dist
+	y += math.cos(angle)*dist
+	while x >= 0 and x < img.shape[0] and y >= 0 and y < img.shape[1]:
 		if img[int(x)][int(y)][0] > 10:
-			return (int(x),int(y),slope)
-		x += signX
-		y += slope*signY
+			return (int(x),int(y),angle)
+		x += math.sin(angle)*dist
+		y += math.cos(angle)*dist
+	# if point[0] == nearestEdge[0]:
+	# 	slope = 1
+	# else: 
+	# 	slope = (point[1]-nearestEdge[1])/float(point[0]-nearestEdge[0])
+	# signX = 1
+	# signY = 1
+	# if (point[0]-nearestEdge[0]) < 0: 
+	# 	signX = -1
+	# 	signY = -1
+	# if (point[0]-nearestEdge[0]) == 0:
+	# 	signX = 0
+	# 	if (point[1]-nearestEdge[1]) < 0:
+	# 		signY = -1
+	# x = point[0] + signX
+	# y = point[1] + slope*signY
+	# while  x >= 0 and x < img.shape[0] and y >= 0 and y < img.shape[1]:
+	# 	if img[int(x)][int(y)][0] > 10:
+	# 		return (int(x),int(y),slope)
+	# 	x += signX
+	# 	y += slope*signY
 
 def getCrossSections(img,centerPoints):
 	crossSections = []
@@ -78,10 +92,27 @@ if __name__ == "__main__":
 	## Load images.
 	img = cv2.imread(args.im)
 	crossSections = getCrossSections(img,centerPoints)
-	cv2.imwrite("centerPoints.jpg",img)
 	f = open("crossSections.txt","w")
+	img2 = np.zeros((img.shape[0],img.shape[1],3), np.uint8)
+
 	for crossSection in crossSections:
+		xMid = crossSection[0]
+		yMid = crossSection[1]
+		dist = crossSection[2]
+		angle = crossSection[3]
 		f.write(str(crossSection[0]) + " " + str(crossSection[1]) + " " + str(crossSection[2]) + " " + str(crossSection[3]) + "\n")
+		x1 = xMid + math.sin(angle)*dist/2
+		y1 = yMid + math.cos(angle)*dist/2
+		x2 = xMid - math.sin(angle)*dist/2
+		y2 = yMid - math.cos(angle)*dist/2
+		img2[xMid][yMid] = [255,255,255]
+		img2[x1][y1] = [255,255,255]
+		img2[x2][y2] = [255,255,255]
+	cv2.imwrite("centerPoints1.jpg",img)
+	cv2.imwrite("centerPoints2.jpg",img2)
+
+
+
 
 
 
