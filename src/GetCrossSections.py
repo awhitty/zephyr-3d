@@ -4,8 +4,11 @@ import math
 import Queue
 from sets import Set
 
+<<<<<<< HEAD
 currentAngle = 0
 
+=======
+>>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
 def getCenterPoints(centerPointsName):
 	centerPoints = []
 	seenPoints = Set()
@@ -110,8 +113,6 @@ if __name__ == "__main__":
 		img2[x2][y2] = [255,255,255]
 	cv2.imwrite("centerPoints1.jpg",img)
 	cv2.imwrite("centerPoints2.jpg",img2)
-
-
 
 
 
