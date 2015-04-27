@@ -2,6 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
+<<<<<<< HEAD
       location = "self:3DTest.xcodeproj">
+=======
+      location = "self:">
+>>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
    </FileRef>
 </Workspace>

@@ -124,7 +124,11 @@ def merge_images(image1, image2, homography, size, offset, keypoints):
   # draw the transformed image2
   cv2.warpPerspective(image2, homography, size, panorama)
   
-  panorama[oy:h1+oy, ox:ox+w1] = image1  
+  #panorama[oy:h1+oy, ox:ox+w1] = image1  
+  for y in range(h1):
+    for x in range(w1):
+      if image1[y][x][0] < 25 and image1[y][x][1] < 25 and image1[y][x][0] < 25: continue
+      panorama[oy+y][ox+x] = image1[y][x] 
   # panorama[:h1, :w1] = image1  
 
   return panorama
@@ -196,32 +200,43 @@ if __name__ == "__main__":
   args = parser.parse_args()
   ## Load images.
   image1 = cv2.imread(args.im1+"1.jpg")
+  im1GPS = (1,1)
+  xPixtoGPS = 0
+  yPixtoGPS = 0
   for i in range(2,7):
-  	  image2 = cv2.imread(args.im1 +str(i)+".jpg")
+    image2 = cv2.imread(args.im1 +str(i)+".jpg")
 	  ## Detect features and compute descriptors.
-	  (keypoints1, descriptors1) = extract_features(image2, algorithm=args.algorithm)
-	  (keypoints2, descriptors2) = extract_features(image1, algorithm=args.algorithm)
-	  print len(keypoints1), "features detected in image1"
-	  print len(keypoints2), "features detected in image2"
-	  
+    im2GPS = (0,0)
+    (keypoints1, descriptors1) = extract_features(image1, algorithm=args.algorithm)
+    (keypoints2, descriptors2) = extract_features(image2, algorithm=args.algorithm)
+    print len(keypoints1), "features detected in image2"
+    print len(keypoints2), "features detected in image1"
+
 	  ## Find corresponding features.
-	  (points1, points2) = find_correspondences(keypoints1, descriptors1, keypoints2, descriptors2)
-	  print len(points1), "features matched"
+    (points1, points2) = find_correspondences(keypoints1, descriptors1, keypoints2, descriptors2)
+    print len(points1), "features matched"
 	  
 	  ## Visualise corresponding features.
-	  correspondences = draw_correspondences(image2, image1, points1, points2)
-	  cv2.imwrite('../images/PhotoStitchTest/out/correspondences.jpg', correspondences)
-	  print 'Wrote correspondences.jpg'
+    correspondences = draw_correspondences(image1, image2, points1, points2)
+    cv2.imwrite('../images/PhotoStitchTest/out/correspondences.jpg', correspondences)
+    print 'Wrote correspondences.jpg'
 	  
 	  ## Find homography between the views.
-	  (homography, _) = cv2.findHomography(points2, points1)
-	  
+    (homography, _) = cv2.findHomography(points2, points1)
+    print homography
+    ox = homography[0][2]
+    oy = homography[1][2]
+
 	  ## Calculate size and offset of merged panorama.
-	  (size, offset) = calculate_size(image2.shape, image1.shape, homography)
-	  print "output size: %ix%i" % size
-	  
+    (size, offset) = calculate_size(image1.shape, image2.shape, homography)
+    print "output size: %ix%i" % size
+    if xPixtoGPS == 0:
+      xPixtoGPS = (im2GPS[0] - im1GPS[0])/(ox)
+      yPixtoGPS = (im2GPS[1] - im1GPS[1])/(oy)
+
 	  ## Finally combine images into a panorama.
-	  panorama = merge_images(image2, image1, homography, size, offset, (points1, points2))
-	  image1 = panorama
+    panorama = merge_images(image1, image2, homography, size, offset, (points1, points2))
+    image1 = panorama
+  print xPixtoGPS, yPixtoGPS
   cv2.imwrite('panorama.jpg', image1)
   print 'Wrote panorama.jpg'

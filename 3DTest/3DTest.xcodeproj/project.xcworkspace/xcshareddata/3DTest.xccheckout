@@ -7,6 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>08FF7ACF-7FA4-42A7-9FB1-E2301108D722</string>
 	<key>IDESourceControlProjectName</key>
+<<<<<<< HEAD
 	<string>3DTest</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
@@ -15,13 +16,27 @@
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>3DTest/3DTest.xcodeproj</string>
+=======
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>74D5F9ECD458B6B3A88A41B5A0C19690083B89F0</key>
+		<string>https://github.com/cs210/zephyr-3d.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>3DTest/3DTest.xcodeproj/project.xcworkspace</string>
+>>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>74D5F9ECD458B6B3A88A41B5A0C19690083B89F0</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
+<<<<<<< HEAD
 	<string>https://github.com/cs210/zephyr.git</string>
+=======
+	<string>https://github.com/cs210/zephyr-3d.git</string>
+>>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -34,7 +49,11 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>74D5F9ECD458B6B3A88A41B5A0C19690083B89F0</string>
 			<key>IDESourceControlWCCName</key>
+<<<<<<< HEAD
 			<string>zephyr</string>
+=======
+			<string>zephyr-3d</string>
+>>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
 		</dict>
 	</array>
 </dict>
