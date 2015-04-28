@@ -9,6 +9,7 @@
 import UIKit
 import QuartzCore
 import SceneKit
+import CoreGraphics
 
 class GameViewController: UIViewController {
 
@@ -16,7 +17,23 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/trackwithfill")!
+        let scene = SCNScene(named: "art.scnassets/smallText")!
+        
+        
+        var cubeMap: [UIImage] = []
+        var right = UIImage(named: "right.png")
+        var left = UIImage(named: "left")
+        var bottom = UIImage(named: "down")
+        var back = UIImage(named: "back")
+        var front = UIImage(named: "front")
+        var top = UIImage(named: "top")
+        //        cubeMap.append(UIImage(named: "right.png")!)
+        //        cubeMap.append(UIImage(named: "left.png")!)
+        //        cubeMap.append(UIImage(named: "right")!)
+        //        cubeMap.append(UIImage(named: "right")!)
+        //        cubeMap.append(UIImage(named: "right")!)
+        //        cubeMap.append(UIImage(named: "right")!)
+        scene.background.contents = NSArray(array: [right!, left!, top!, bottom!, back!, front!])
         
         // create and add a camera to the scene
         let cameraNode = SCNNode()
@@ -24,36 +41,27 @@ class GameViewController: UIViewController {
         scene.rootNode.addChildNode(cameraNode)
         
         // place the camera
-<<<<<<< HEAD
-=======
         cameraNode.position = SCNVector3(x: 0, y: 1, z: 20)
->>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
-        cameraNode.position = SCNVector3(x: 10, y: 1, z: 20)
         cameraNode.rotation = SCNVector4Make(0, 0, 0, 1.5)
         
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
         lightNode.light!.type = SCNLightTypeOmni
-<<<<<<< HEAD
-=======
-        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
-        lightNode.light!.color = UIColor(white: 0.95, alpha: 1.0)
+        lightNode.position = SCNVector3(x: 0, y: 10, z: 5)
+        lightNode.light!.color = UIColor(white: 0.95, alpha: 1)
 //        lightNode.position = SCNVector3Make(0, 1, 50)
->>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
 //        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
-        lightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
-        lightNode.position = SCNVector3Make(0, 10, 50)
+//        lightNode.position = SCNVector3Make(0, 10, 50)
         scene.rootNode.addChildNode(lightNode)
         
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = SCNLightTypeAmbient
-<<<<<<< HEAD
-=======
-        ambientLightNode.light!.color = UIColor.yellowColor()
-//        scene.rootNode.addChildNode(ambientLightNode)
+//        ambientLightNode.light!.color = UIColor.yellowColor()
+        ambientLightNode.light!.color = UIColor.whiteColor()
+        scene.rootNode.addChildNode(ambientLightNode)
         
         let floor = SCNFloor()
         let floorNode = SCNNode(geometry: floor)
@@ -65,25 +73,21 @@ class GameViewController: UIViewController {
         floorMaterial.locksAmbientWithDiffuse   = true
         floor.materials = [floorMaterial]
         
-        scene.rootNode.addChildNode(floorNode)
->>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
-        ambientLightNode.light!.color = UIColor.darkGrayColor()
-        scene.rootNode.addChildNode(ambientLightNode)
+//        scene.rootNode.addChildNode(floorNode)
+
         
         // retrieve the ship node
         let ship = scene.rootNode.childNodeWithName("node", recursively: true)!
-        ship.scale = SCNVector3(x: 0.02, y: 0.02, z: 0.02)
-<<<<<<< HEAD
-=======
+        ship.scale = SCNVector3(x: 0.04, y: 0.04, z: 0.04)
         ship.position = SCNVector3(x: -10, y: 0, z: 0)
-        ship.rotation = SCNVector4Make(1, 0, 0, CFloat( -M_PI_4 ) * 2)
->>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
+        ship.rotation = SCNVector4Make(1, 0, 0, CFloat( -M_PI_4 ) * 0)
         
         // animate the 3d object
 //        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1)))
         
         // retrieve the SCNView
-        let scnView = self.view as SCNView
+        let scnView = self.view as! SCNView
+
         
         // set the scene to the view
         scnView.scene = scene
@@ -95,7 +99,7 @@ class GameViewController: UIViewController {
         scnView.showsStatistics = true
         
         // configure the view
-        scnView.backgroundColor = UIColor.blackColor()
+//        scnView.backgroundColor = UIColor.blackColor()
         
         // add a tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
@@ -109,7 +113,7 @@ class GameViewController: UIViewController {
     
     func handleTap(gestureRecognize: UIGestureRecognizer) {
         // retrieve the SCNView
-        let scnView = self.view as SCNView
+        let scnView = self.view as! SCNView
         
         // check what nodes are tapped
         let p = gestureRecognize.locationInView(scnView)
