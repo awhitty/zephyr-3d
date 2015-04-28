@@ -36,6 +36,8 @@ def getNearestEdge(point,img):
 
 def getOppositeEdge(point,nearestEdge,img):
 	(x,y,angle) = nearestEdge
+	x = point[0]
+	y = point[1]
 	angle += math.radians(180)
 	dist = 1
 	x += math.sin(angle)*dist
@@ -106,6 +108,7 @@ if __name__ == "__main__":
 		yMid = crossSection[1]
 		dist = crossSection[2]
 		angle = crossSection[3]
+		if dist < 2: continue
 		f.write(str(crossSection[0]) + " " + str(crossSection[1]) + " " + str(crossSection[2]) + " " + str(crossSection[3]) + "\n")
 		d = 0
 		img3[xMid][yMid] = [255,255,255]
