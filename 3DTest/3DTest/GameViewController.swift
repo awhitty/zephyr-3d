@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/sampleMesh-textured-rough")!
+        let scene = SCNScene(named: "art.scnassets/sampleMesh-textured-rough2")!
         
         
         var cubeMap: [UIImage] = []
@@ -60,7 +60,7 @@ class GameViewController: UIViewController {
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = SCNLightTypeAmbient
 //        ambientLightNode.light!.color = UIColor.yellowColor()
-        ambientLightNode.light!.color = UIColor.whiteColor()
+        ambientLightNode.light!.color = UIColor.darkGrayColor()
         scene.rootNode.addChildNode(ambientLightNode)
         
         let floor = SCNFloor()
