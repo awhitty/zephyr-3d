@@ -4,11 +4,8 @@ import math
 import Queue
 from sets import Set
 
-<<<<<<< HEAD
 currentAngle = 0
 
-=======
->>>>>>> c1acbbf63c353d5c29a1637f22854ac1e72793e1
 def getCenterPoints(centerPointsName):
 	centerPoints = []
 	seenPoints = Set()
@@ -39,6 +36,8 @@ def getNearestEdge(point,img):
 
 def getOppositeEdge(point,nearestEdge,img):
 	(x,y,angle) = nearestEdge
+	x = point[0]
+	y = point[1]
 	angle += math.radians(180)
 	dist = 1
 	x += math.sin(angle)*dist
@@ -80,7 +79,7 @@ def getCrossSections(img,centerPoints):
 		if not oppositeEdge: continue
 		midpointX = (nearestEdge[0] + oppositeEdge[0])/2
 		midpointY = (nearestEdge[1] + oppositeEdge[1])/2
-		img[midpointX][midpointY] = [255,255,255]
+		#img[midpointX][midpointY] = [255,255,255]
 		dist = math.sqrt((nearestEdge[0] - oppositeEdge[0])**2 + (nearestEdge[1] - oppositeEdge[1])**2)
 		crossSections.append((midpointX,midpointY,dist,oppositeEdge[2]))
 	return crossSections
@@ -91,28 +90,47 @@ if __name__ == "__main__":
 	parser.add_argument('centerPoints')
 	args = parser.parse_args()
 
+	img = cv2.imread(args.im)
+	img2 = np.zeros((img.shape[0],img.shape[1],3), np.float32)
+	img3 = np.zeros((img.shape[0],img.shape[1],3), np.float32)
+
 	centerPoints = getCenterPoints(args.centerPoints)
 	## Load images.
-	img = cv2.imread(args.im)
 	crossSections = getCrossSections(img,centerPoints)
 	f = open("crossSections.txt","w")
-	img2 = np.zeros((img.shape[0],img.shape[1],3), np.uint8)
+	# h,w = img.shape
+	# vis2 = cv2.CreateMat(h, w, cv2.CV_32FC3)
+	# vis0 = cv2.fromarray(img2)
+	# cv2.CvtColor(vis0, vis2, cv2.CV_GRAY2BGR)
 
 	for crossSection in crossSections:
 		xMid = crossSection[0]
 		yMid = crossSection[1]
 		dist = crossSection[2]
 		angle = crossSection[3]
+		if dist < 2: continue
 		f.write(str(crossSection[0]) + " " + str(crossSection[1]) + " " + str(crossSection[2]) + " " + str(crossSection[3]) + "\n")
-		x1 = xMid + math.sin(angle)*dist/2
-		y1 = yMid + math.cos(angle)*dist/2
-		x2 = xMid - math.sin(angle)*dist/2
-		y2 = yMid - math.cos(angle)*dist/2
-		img2[xMid][yMid] = [255,255,255]
-		img2[x1][y1] = [255,255,255]
-		img2[x2][y2] = [255,255,255]
+		d = 0
+		img3[xMid][yMid] = [255,255,255]
+		x1 = 0
+		y1 = 0
+		x2 = 0
+		y2 = 0
+		while d < dist/2:
+			d += 1
+			x1 = xMid + math.sin(angle)*d
+			y1 = yMid + math.cos(angle)*d
+			x2 = xMid - math.sin(angle)*d
+			y2 = yMid - math.cos(angle)*d
+			# img2[xMid][yMid] = [255,255,255]
+			img2[x1][y1] = [255,255,255]
+			img2[x2][y2] = [255,255,255]
+		img3[x1][y1] = [255,255,255]
+		img3[x2][y2] = [255,255,255]
 	cv2.imwrite("centerPoints1.jpg",img)
 	cv2.imwrite("centerPoints2.jpg",img2)
+	cv2.imwrite("centerPoints3.jpg",img3)
+
 
 
 

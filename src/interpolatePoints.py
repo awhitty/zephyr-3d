@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
 
-f = open("centerPoints1.txt","r")
+f = open("centerPoints.txt","r")
 xArr = []
 yArr = []
 zArr = []
@@ -22,7 +22,7 @@ x3 = gaussian_filter1d(x2, sigma)
 y3 = gaussian_filter1d(y2, sigma)
 z3 = gaussian_filter1d(z2, sigma)
 
-f2 = open("interpolatedPoints.txt","w")
+f2 = open("interpolatedPoints1.txt","w")
 for index in range(len(x3)):
 	output = str(x3[index]) + " " + str(y3[index]) + " " + str(z3[index]) + "\n"
 	f2.write(output)
