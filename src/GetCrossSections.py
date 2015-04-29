@@ -3,6 +3,7 @@ import argparse as ap
 import math
 import Queue
 from sets import Set
+import DisplayCrossSections
 
 currentAngle = 0
 
@@ -34,6 +35,11 @@ def getNearestEdge(point,img):
 			return (int(row),int(col),ray[0])
 		queue.put((ray[0], ray[1]+0.1))
 
+def normalizeAngle(angle):
+	while angle >= 2*math.pi:
+		angle -= 2*math.pi
+	return angle
+
 def getOppositeEdge(point,nearestEdge,img):
 	(x,y,angle) = nearestEdge
 	x = point[0]
@@ -44,7 +50,7 @@ def getOppositeEdge(point,nearestEdge,img):
 	y += math.cos(angle)*dist
 	while x >= 0 and x < img.shape[0] and y >= 0 and y < img.shape[1]:
 		if img[int(x)][int(y)][0] > 10:
-			return (int(x),int(y),angle)
+			return (int(x),int(y),normalizeAngle(angle))
 		x += math.sin(angle)*dist
 		y += math.cos(angle)*dist
 	# if point[0] == nearestEdge[0]:
@@ -71,6 +77,7 @@ def getOppositeEdge(point,nearestEdge,img):
 def getCrossSections(img,centerPoints):
 	crossSections = []
 	index = -1
+	previousDist = None
 	for point in centerPoints:
 		index += 1
 		print index
@@ -81,6 +88,8 @@ def getCrossSections(img,centerPoints):
 		midpointY = (nearestEdge[1] + oppositeEdge[1])/2
 		#img[midpointX][midpointY] = [255,255,255]
 		dist = math.sqrt((nearestEdge[0] - oppositeEdge[0])**2 + (nearestEdge[1] - oppositeEdge[1])**2)
+		if previousDist != None and dist > 1.5*previousDist: continue
+		previousDist = dist
 		crossSections.append((midpointX,midpointY,dist,oppositeEdge[2]))
 	return crossSections
 
@@ -91,45 +100,12 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	img = cv2.imread(args.im)
-	img2 = np.zeros((img.shape[0],img.shape[1],3), np.float32)
-	img3 = np.zeros((img.shape[0],img.shape[1],3), np.float32)
 
 	centerPoints = getCenterPoints(args.centerPoints)
 	## Load images.
 	crossSections = getCrossSections(img,centerPoints)
-	f = open("crossSections.txt","w")
-	# h,w = img.shape
-	# vis2 = cv2.CreateMat(h, w, cv2.CV_32FC3)
-	# vis0 = cv2.fromarray(img2)
-	# cv2.CvtColor(vis0, vis2, cv2.CV_GRAY2BGR)
 
-	for crossSection in crossSections:
-		xMid = crossSection[0]
-		yMid = crossSection[1]
-		dist = crossSection[2]
-		angle = crossSection[3]
-		if dist < 2: continue
-		f.write(str(crossSection[0]) + " " + str(crossSection[1]) + " " + str(crossSection[2]) + " " + str(crossSection[3]) + "\n")
-		d = 0
-		img3[xMid][yMid] = [255,255,255]
-		x1 = 0
-		y1 = 0
-		x2 = 0
-		y2 = 0
-		while d < dist/2:
-			d += 1
-			x1 = xMid + math.sin(angle)*d
-			y1 = yMid + math.cos(angle)*d
-			x2 = xMid - math.sin(angle)*d
-			y2 = yMid - math.cos(angle)*d
-			# img2[xMid][yMid] = [255,255,255]
-			img2[x1][y1] = [255,255,255]
-			img2[x2][y2] = [255,255,255]
-		img3[x1][y1] = [255,255,255]
-		img3[x2][y2] = [255,255,255]
-	cv2.imwrite("centerPoints1.jpg",img)
-	cv2.imwrite("centerPoints2.jpg",img2)
-	cv2.imwrite("centerPoints3.jpg",img3)
+	DisplayCrossSections.displayCrossSections(crossSections,img,"crossSections.txt")
 
 
 
