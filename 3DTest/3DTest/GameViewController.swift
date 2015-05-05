@@ -27,13 +27,15 @@ class GameViewController: UIViewController {
         var back = UIImage(named: "back")
         var front = UIImage(named: "front")
         var top = UIImage(named: "top")
+        var grid = UIImage(named: "grid.png")
         //        cubeMap.append(UIImage(named: "right.png")!)
         //        cubeMap.append(UIImage(named: "left.png")!)
         //        cubeMap.append(UIImage(named: "right")!)
         //        cubeMap.append(UIImage(named: "right")!)
         //        cubeMap.append(UIImage(named: "right")!)
         //        cubeMap.append(UIImage(named: "right")!)
-        scene.background.contents = NSArray(array: [right!, left!, top!, bottom!, back!, front!])
+//        scene.background.contents = NSArray(array: [right!, left!, top!, bottom!, back!, front!])
+        scene.background.contents = NSArray(array: [grid!, grid!, grid!, grid!, grid!, grid!])
         
         // create and add a camera to the scene
         let cameraNode = SCNNode()
