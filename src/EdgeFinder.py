@@ -44,7 +44,7 @@ def getHeight(x,y,centerPoints):
 	return minHeight
 
 def createOrdered3D(centerPoints,edgeSets):
-	f = open('trackPoints.xyz', 'w')
+	f = open('trackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
@@ -71,7 +71,7 @@ def createOrdered3D(centerPoints,edgeSets):
 	plt.show()
 
 def createScatter3D(centerPoints,edgeSets):
-	f = open('trackPoints.xyz', 'w')
+	f = open('trackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
