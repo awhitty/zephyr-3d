@@ -1,4 +1,5 @@
 import cv2, numpy as np
+from numpy.random import choice
 from matplotlib import pyplot as plt
 import math
 import argparse as ap
@@ -9,6 +10,8 @@ from matplotlib import cm
 import TrackEdges
 from sets import Set
 import EdgeFinder
+
+MAX_ITERS = 1000
 
 def calculateCurvature(linePoints):
 	curvatureSum = 0
@@ -30,6 +33,37 @@ def calculateCurvature(linePoints):
 		curvatureSum += 2*math.sin(angle)/distXZ
 	return curvatureSum
 
+def displayLine(line,im):
+	for point in line:
+		im[int(point[0])][int(point[1])][0] = 0
+		im[int(point[0])][int(point[1])][1] = 0
+		im[int(point[0])][int(point[1])][2] = 0
+	cv2.imwrite("bestLine.jpg",im)
+
+
+def calculateOptimal(crossSections,im):
+	bestLine = []
+	bestCurvature = float("inf")
+	locationChange = [-0.1,0,0.1]
+	for iteration in range(MAX_ITERS):
+		line = []
+		loc = 0
+		for crossSection in crossSections:
+			weights = [.3,.4,.3]
+			loc += choice(locationChange,p=weights)
+			loc = min(loc,.5*crossSection[2])
+			loc = max(loc,-.5*crossSection[2])
+			angle = crossSection[3]
+			x = crossSection[0] + math.sin(angle)*loc
+			y = crossSection[1] + math.cos(angle)*dist
+			line.append((x,y))
+		curvature = calculateCurvature(line)
+		if curvature < bestCurvature:
+			bestLine = line
+			bestCurvature = curvature
+	print bestCurvature
+	displayLine(bestLine,im)
+
 
 
 if __name__ == "__main__":
@@ -38,6 +72,7 @@ if __name__ == "__main__":
 	parser.add_argument('crossSections')
 	args = parser.parse_args()
 
+	img = cv2.imread(args.im)
 	crossSections = []
 
 	with open(args.crossSections) as f:
@@ -48,5 +83,4 @@ if __name__ == "__main__":
 			dist = float(crossSection[2])
 			angle = float(crossSection[3])
 			crossSections.append((xMid,yMid,dist,angle))
-	curvatureSum = calculateCurvature(crossSections)
-	print curvatureSum
+	calculateOptimal(crossSections,img)
