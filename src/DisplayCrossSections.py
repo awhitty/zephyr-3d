@@ -1,6 +1,22 @@
 import cv2, numpy as np
-import argparse as ap
+from matplotlib import pyplot as plt
 import math
+import argparse as ap
+from scipy.ndimage import gaussian_filter1d
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+import TrackEdges
+from sets import Set
+import EdgeFinder
+
+
+xArr1 = []
+yArr1 = []
+zArr1 = []
+xArr2 = []
+yArr2 = []
+zArr2 = []
 
 
 def displayCrossSections(crossSections, img, name):
@@ -35,18 +51,49 @@ def displayCrossSections(crossSections, img, name):
 			img[x2][y2] = [0,255,0]
 		img3[x1][y1] = [255,255,255]
 		img3[x2][y2] = [255,255,255]
+		xArr1.append(x1)
+		xArr2.append(x2)
+		yArr1.append(y1)
+		yArr2.append(y2)
 	cv2.imwrite("centerPoints.jpg",img)
 	cv2.imwrite("centerPoints2.jpg",img2)
 	cv2.imwrite("centerPoints3.jpg",img3)
 
+def plotTrack(crossSections,centerPoints):
+	fig = plt.figure()
+	ax = fig.add_subplot(111, projection='3d')
+	for index in range(len(xArr1)):
+		zArr1.append(EdgeFinder.getHeight(xArr1[index],yArr1[index],centerPoints))
+		zArr2.append(EdgeFinder.getHeight(xArr2[index],yArr2[index],centerPoints))	
+	t = np.linspace(0, 1, len(zArr1))
+	t2 = np.linspace(0, 1, len(zArr1))
+
+	x12 = np.interp(t2, t, xArr1)
+	y12 = np.interp(t2, t, yArr1)
+	z12 = np.interp(t2, t, zArr1)
+	x22 = np.interp(t2, t, xArr2)
+	y22 = np.interp(t2, t, yArr2)
+	z22 = np.interp(t2, t, zArr2)
+	sigma = 2
+	x13 = gaussian_filter1d(x12, sigma)
+	y13 = gaussian_filter1d(y12, sigma)
+	z13 = gaussian_filter1d(z12, sigma)
+	x23 = gaussian_filter1d(x22, sigma)
+	y23 = gaussian_filter1d(y22, sigma)
+	z23 = gaussian_filter1d(z22, sigma)
+	ax.plot(x13,y13,z13,color = 'b')
+	ax.plot(x23,y23,z23,color = 'b')
+	plt.show()
 
 
 if __name__ == "__main__":
 	parser = ap.ArgumentParser()
 	parser.add_argument('im')
 	parser.add_argument('crossSections')
+	parser.add_argument('centerPoints')
 	args = parser.parse_args()
 
+	centerPoints = EdgeFinder.getCenterPoints(args.centerPoints)
 	img = cv2.imread(args.im)
 
 	crossSections = []
@@ -60,4 +107,6 @@ if __name__ == "__main__":
 			angle = float(crossSection[3])
 			crossSections.append((xMid,yMid,dist,angle))
 	displayCrossSections(crossSections,img,"interpolatedCrossSections1.txt")
+	plotTrack(crossSections,centerPoints)
+
 

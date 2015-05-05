@@ -118,7 +118,7 @@ def checkRay(point,edgeImage,image,angle):
 	x+=math.sin(angle)
 	y+=math.cos(angle)
 	while x > 0 and x < xMax and y > 0 and y < yMax:
-		#fillPoint(int(x),int(y),edgeImage)
+		fillPoint(int(x),int(y),edgeImage)
 		if image[int(x)][int(y)] > 10:
 			fillPoint(int(x),int(y),edgeImage)
 			return
