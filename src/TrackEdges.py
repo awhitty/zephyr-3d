@@ -83,11 +83,15 @@ class TrackEdges():
 	def getEdgeSet(self,edges,pixel):
 		edgePixels = []
 		row = pixel[0]
+		row = min(row, self.image.shape[0]-2)
+		row = max(row,1)
 		col = pixel[1]
+		col = min(col, self.image.shape[1]-2)
+		col = max(col,1)
 		edgePixels.append(pixel)
 		exhaustedSearch = False
 		direction = 0
-		while not exhaustedSearch:
+		while not exhaustedSearch and row < self.image.shape[0]-1 and col < self.image.shape[1]-1:
 			if self.image[row-1][col-1] > 1 and (row-1,col-1) in self.edgePixels:
 				row -= 1
 				col -= 1

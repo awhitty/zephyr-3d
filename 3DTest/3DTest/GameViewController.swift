@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/smoothSampleMesh-textured")!
+        let scene = SCNScene(named: "art.scnassets/thick-track-textured")!
         
         
         var cubeMap: [UIImage] = []
@@ -34,8 +34,8 @@ class GameViewController: UIViewController {
         //        cubeMap.append(UIImage(named: "right")!)
         //        cubeMap.append(UIImage(named: "right")!)
         //        cubeMap.append(UIImage(named: "right")!)
-//        scene.background.contents = NSArray(array: [right!, left!, top!, bottom!, back!, front!])
-        scene.background.contents = NSArray(array: [grid!, grid!, grid!, grid!, grid!, grid!])
+//      scene.background.contents = NSArray(array: [right!, left!, top!, bottom!, back!, front!])
+       scene.background.contents = NSArray(array: [grid!, grid!, grid!, grid!, grid!, grid!])
         
         // create and add a camera to the scene
         let cameraNode = SCNNode()
@@ -63,7 +63,8 @@ class GameViewController: UIViewController {
         ambientLightNode.light!.type = SCNLightTypeAmbient
 //        ambientLightNode.light!.color = UIColor.yellowColor()
         ambientLightNode.light!.color = UIColor.darkGrayColor()
-//        scene.rootNode.addChildNode(ambientLightNode)
+
+        scene.rootNode.addChildNode(ambientLightNode)
         
         // retrieve the ship node
         let ship = scene.rootNode.childNodeWithName("node", recursively: true)!

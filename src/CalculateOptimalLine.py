@@ -11,7 +11,14 @@ import TrackEdges
 from sets import Set
 import EdgeFinder
 
-MAX_ITERS = 1000
+MAX_ITERS = 10000
+
+def fillPoint(row,col,image):
+	for x in range(-1,1):
+		for y in range(-1,1):
+			image[row + x][col+y][0] = 255
+			image[row + x][col+y][1] = 255
+			image[row + x][col+y][2] = 255
 
 def calculateCurvature(linePoints):
 	curvatureSum = 0
@@ -35,27 +42,34 @@ def calculateCurvature(linePoints):
 
 def displayLine(line,im):
 	for point in line:
-		im[int(point[0])][int(point[1])][0] = 0
-		im[int(point[0])][int(point[1])][1] = 0
-		im[int(point[0])][int(point[1])][2] = 0
+		fillPoint(int(point[0]),int(point[1]),im)
+		# im[int(point[0])][int(point[1])][0] = 0
+		# im[int(point[0])][int(point[1])][1] = 0
+		# im[int(point[0])][int(point[1])][2] = 0
 	cv2.imwrite("bestLine.jpg",im)
+
+def calculateWeights(crossSections,index):
+	return [.3,.4,.3]
 
 
 def calculateOptimal(crossSections,im):
 	bestLine = []
 	bestCurvature = float("inf")
-	locationChange = [-0.1,0,0.1]
+	locationChange = [-1,0,1]
 	for iteration in range(MAX_ITERS):
+		# print iteration
 		line = []
 		loc = 0
+		index = -1
 		for crossSection in crossSections:
-			weights = [.3,.4,.3]
+			index += 1
+			weights = calculateWeights(crossSections,index)
 			loc += choice(locationChange,p=weights)
 			loc = min(loc,.5*crossSection[2])
 			loc = max(loc,-.5*crossSection[2])
 			angle = crossSection[3]
 			x = crossSection[0] + math.sin(angle)*loc
-			y = crossSection[1] + math.cos(angle)*dist
+			y = crossSection[1] + math.cos(angle)*loc
 			line.append((x,y))
 		curvature = calculateCurvature(line)
 		if curvature < bestCurvature:
