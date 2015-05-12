@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/sampleMesh-textured-rough2")!
+        let scene = SCNScene(named: "art.scnassets/smoothSampleMesh-textured")!
         
         
         var cubeMap: [UIImage] = []
@@ -49,9 +49,9 @@ class GameViewController: UIViewController {
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
-        lightNode.light!.type = SCNLightTypeOmni
-        lightNode.position = SCNVector3(x: 0, y: 10, z: 5)
-        lightNode.light!.color = UIColor(white: 0.95, alpha: 1)
+        lightNode.light!.type = SCNLightTypeDirectional
+        lightNode.position = SCNVector3(x: 0, y: 0, z: 0)
+        lightNode.light!.color = UIColor.darkGrayColor()
 //        lightNode.position = SCNVector3Make(0, 1, 50)
 //        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
 //        lightNode.position = SCNVector3Make(0, 10, 50)
@@ -63,25 +63,12 @@ class GameViewController: UIViewController {
         ambientLightNode.light!.type = SCNLightTypeAmbient
 //        ambientLightNode.light!.color = UIColor.yellowColor()
         ambientLightNode.light!.color = UIColor.darkGrayColor()
-        scene.rootNode.addChildNode(ambientLightNode)
-        
-        let floor = SCNFloor()
-        let floorNode = SCNNode(geometry: floor)
-        floorNode.position.y = -2.5
-        floor.reflectivity = 0
-        
-        let floorMaterial = SCNMaterial()
-        floorMaterial.diffuse.contents  = UIColor.greenColor()
-        floorMaterial.locksAmbientWithDiffuse   = true
-        floor.materials = [floorMaterial]
-        
-//        scene.rootNode.addChildNode(floorNode)
-
+//        scene.rootNode.addChildNode(ambientLightNode)
         
         // retrieve the ship node
         let ship = scene.rootNode.childNodeWithName("node", recursively: true)!
         ship.scale = SCNVector3(x: 0.04, y: 0.04, z: 0.04)
-        ship.position = SCNVector3(x: -10, y: 0, z: 0)
+        ship.position = SCNVector3(x: -15, y: 0, z: 0)
         ship.rotation = SCNVector4Make(1, 0, 0, CFloat( -M_PI_4 ) * 0)
         
         // animate the 3d object
@@ -89,6 +76,7 @@ class GameViewController: UIViewController {
         
         // retrieve the SCNView
         let scnView = self.view as! SCNView
+        scnView.autoenablesDefaultLighting = false
 
         
         // set the scene to the view
