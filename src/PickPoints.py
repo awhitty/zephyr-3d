@@ -5,7 +5,7 @@ from PIL import ImageOps
 import ImageTk
 import cv2, numpy as np
 import argparse as ap
-f = open('centerPoints.txt','w')
+f = open('ArastraderoCenterPoints.txt','w')
 
 if __name__ == "__main__":
     root = Tk()
@@ -30,6 +30,7 @@ if __name__ == "__main__":
 
     #adding the image
     img = Image.open(args.im) 
+    img = img.resize((img.size[0]/4,img.size[1]/4), Image.ANTIALIAS)
     #img = ImageOps.mirror(img).transpose(2)
     img = ImageTk.PhotoImage(img)
     canvas.create_image(0,0,image=img,anchor="nw")
@@ -38,7 +39,7 @@ if __name__ == "__main__":
     #function to be called when mouse is clicked
     def printcoords(event):
         #outputting x and y coords to console
-        f.write(str(event.x)+"\t"+str(event.y)+"\n")
+        f.write(str(event.x*4)+"\t"+str(event.y*4)+"\n")
     #mouseclick event
     canvas.bind("<Button 1>",printcoords)
 

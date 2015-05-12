@@ -19,10 +19,12 @@ def getCenterPoints(centerPointsName):
 	with open(centerPointsName) as f:
 		for line in f:
 			nums = line.split()
-			if ((int(float(nums[0])),int(float(nums[1])))) in seenPoints: continue
-			centerPoints.append((int(float(nums[0])),int(float(nums[1])),float(nums[2])))
-			seenPoints.add(((int(float(nums[0])),int(float(nums[1])))))
-			#centerPoints.append((int(float(nums[1])),int(float(nums[0]))))
+			x = int(float(nums[1]))
+			y = int(float(nums[0])) 
+			if ((x,y)) in seenPoints: continue
+			centerPoints.append((x,y,float(nums[2])))
+			seenPoints.add(((x,y)))
+			#centerPoints.append((y,x))
 	return centerPoints
 
 def getHeight(x,y,centerPoints):
@@ -44,7 +46,7 @@ def getHeight(x,y,centerPoints):
 	return minHeight
 
 def createOrdered3D(centerPoints,edgeSets):
-	f = open('trackPointsTest.xyz', 'w')
+	f = open('ArastraderoTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
@@ -71,7 +73,7 @@ def createOrdered3D(centerPoints,edgeSets):
 	plt.show()
 
 def createScatter3D(centerPoints,edgeSets):
-	f = open('trackPointsTest.xyz', 'w')
+	f = open('ArastraderoTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
@@ -103,12 +105,14 @@ def create3D(centerPoints):
 	plt.show()
 
 def fillPoint(row,col,image):
+	row = min(row,image.shape[0]-6)
+	col = min(col,image.shape[1]-6)
 	xPoints.append(row)
 	yPoints.append(col)
 	image[row][col] = 255
-	# for x in range(-1,1):
-	# 	for y in range(-1,1):
-	# 		image[row + x][col+y] = 255
+	for x in range(-5,5):
+		for y in range(-5,5):
+			image[row + x][col+y] = 255
 
 def checkRay(point,edgeImage,image,angle):
 	xMax = image.shape[0]
@@ -164,7 +168,7 @@ if __name__ == "__main__":
 		for col in range(radialEdges.shape[1]):
 			if radialEdges[row][col] > 1: radialEdges[row][col] = 255
 	#radialEdges = cv2.GaussianBlur(radialEdges,(5,5),0)
-	cv2.imwrite("EdgeImage.jpg",radialEdges)
+	cv2.imwrite("ArastraderoEdgeImage.jpg",radialEdges)
 
 	plt.subplot(121),plt.imshow(img,cmap = 'gray')
 	plt.title('Original Image'), plt.xticks([]), plt.yticks([])
