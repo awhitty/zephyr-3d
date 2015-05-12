@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/thick-track-textured")!
+        let scene = SCNScene(named: "art.scnassets/thin-track-textured")!
         
         
         var cubeMap: [UIImage] = []
