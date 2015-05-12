@@ -15,7 +15,7 @@ for line in f1:
 lineNum = 0
 for line in f2:
 	vals = line.split()
-	lines[lineNum] += str((float(vals[2]) - 93.4562888001)/4)
+	lines[lineNum] += str((float(vals[2]) - 93.4562888001)*2)
 	lineNum += 1
 
 for line in lines:
