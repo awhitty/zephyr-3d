@@ -5,7 +5,13 @@ from PIL import ImageOps
 import ImageTk
 import cv2, numpy as np
 import argparse as ap
-f = open('ArastraderoCenterPoints.txt','w')
+# f = open('ArastraderoCenterPoints.txt','w')
+f = open('TestGPSDist.txt','w')
+# 37.38304, -122.19282
+# 168   1476
+# 37.386916, -122.174791
+#  ccd3680   540
+
 
 if __name__ == "__main__":
     root = Tk()
