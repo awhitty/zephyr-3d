@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/sampleMesh-textured-rough2")!
+        let scene = SCNScene(named: "art.scnassets/thick-track-textured")!
         
         
         var cubeMap: [UIImage] = []
@@ -34,8 +34,8 @@ class GameViewController: UIViewController {
         //        cubeMap.append(UIImage(named: "right")!)
         //        cubeMap.append(UIImage(named: "right")!)
         //        cubeMap.append(UIImage(named: "right")!)
-//        scene.background.contents = NSArray(array: [right!, left!, top!, bottom!, back!, front!])
-        scene.background.contents = NSArray(array: [grid!, grid!, grid!, grid!, grid!, grid!])
+//      scene.background.contents = NSArray(array: [right!, left!, top!, bottom!, back!, front!])
+       scene.background.contents = NSArray(array: [grid!, grid!, grid!, grid!, grid!, grid!])
         
         // create and add a camera to the scene
         let cameraNode = SCNNode()
@@ -65,6 +65,7 @@ class GameViewController: UIViewController {
         ambientLightNode.light!.color = UIColor.darkGrayColor()
         scene.rootNode.addChildNode(ambientLightNode)
         
+        
         let floor = SCNFloor()
         let floorNode = SCNNode(geometry: floor)
         floorNode.position.y = -2.5
@@ -74,6 +75,11 @@ class GameViewController: UIViewController {
         floorMaterial.diffuse.contents  = UIColor.greenColor()
         floorMaterial.locksAmbientWithDiffuse   = true
         floor.materials = [floorMaterial]
+        
+//        // Add sphere to find light source
+//        let sphereGeometry = SCNSphere(radius: 1.0)
+//        let sphereNode = SCNNode(geometry: sphereGeometry)
+//        scene.rootNode.addChildNode(sphereNode)
         
 //        scene.rootNode.addChildNode(floorNode)
 
