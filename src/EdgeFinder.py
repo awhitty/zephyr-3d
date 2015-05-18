@@ -19,8 +19,8 @@ def getCenterPoints(centerPointsName):
 	with open(centerPointsName) as f:
 		for line in f:
 			nums = line.split()
-			x = int(float(nums[1]))
-			y = int(float(nums[0])) 
+			x = int(float(nums[0]))
+			y = int(float(nums[1])) 
 			if ((x,y)) in seenPoints: continue
 			centerPoints.append((x,y,float(nums[2])))
 			seenPoints.add(((x,y)))
@@ -110,8 +110,8 @@ def fillPoint(row,col,image):
 	xPoints.append(row)
 	yPoints.append(col)
 	image[row][col] = 255
-	for x in range(-5,5):
-		for y in range(-5,5):
+	for x in range(-1,2):
+		for y in range(-1,2):
 			image[row + x][col+y] = 255
 
 def checkRay(point,edgeImage,image,angle):
@@ -122,7 +122,7 @@ def checkRay(point,edgeImage,image,angle):
 	x+=math.sin(angle)
 	y+=math.cos(angle)
 	while x > 0 and x < xMax and y > 0 and y < yMax:
-		fillPoint(int(x),int(y),edgeImage)
+		#fillPoint(int(x),int(y),edgeImage)
 		if image[int(x)][int(y)] > 10:
 			fillPoint(int(x),int(y),edgeImage)
 			return

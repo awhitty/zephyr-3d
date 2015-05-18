@@ -90,7 +90,7 @@ def getCrossSections(img,centerPoints):
 		dist = math.sqrt((nearestEdge[0] - oppositeEdge[0])**2 + (nearestEdge[1] - oppositeEdge[1])**2)
 		if previousDist != None and dist > 1.5*previousDist: continue
 		previousDist = dist
-		crossSections.append((midpointX,midpointY,dist,oppositeEdge[2]))
+		crossSections.append((midpointX,midpointY,dist,oppositeEdge[2], point[2]))
 	return crossSections
 
 if __name__ == "__main__":

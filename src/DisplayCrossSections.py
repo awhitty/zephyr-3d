@@ -31,7 +31,7 @@ def displayCrossSections(crossSections, img, name):
 		dist = crossSection[2]
 		angle = crossSection[3]
 		if dist < 2: continue
-		f.write(str(crossSection[0]) + " " + str(crossSection[1]) + " " + str(crossSection[2]) + " " + str(crossSection[3]) + "\n")
+		f.write(str(crossSection[0]) + " " + str(crossSection[1]) + " " + str(crossSection[2]) + " " + str(crossSection[3]) + " " + str(crossSection[4]) + "\n")
 		d = 0
 		img3[xMid][yMid] = [255,255,255]
 		x1 = 0
@@ -105,7 +105,8 @@ if __name__ == "__main__":
 			yMid = float(crossSection[1])
 			dist = float(crossSection[2])
 			angle = float(crossSection[3])
-			crossSections.append((xMid,yMid,dist,angle))
+			height = float(crossSection[4])
+			crossSections.append((xMid,yMid,dist,angle,height))
 	displayCrossSections(crossSections,img,"interpolatedCrossSections1.txt")
 	plotTrack(crossSections,centerPoints)
 
