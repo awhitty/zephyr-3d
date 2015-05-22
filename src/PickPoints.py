@@ -11,7 +11,7 @@ f = open('TestGPSDist.txt','w')
 # 168   1476
 # 37.386916, -122.174791
 #  ccd3680   540
-
+scale = 1.5
 
 if __name__ == "__main__":
     root = Tk()
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     #adding the image
     img = Image.open(args.im) 
-    img = img.resize((img.size[0]/4,img.size[1]/4), Image.ANTIALIAS)
+    img = img.resize((int(img.size[0]/scale),int(img.size[1]/scale)), Image.ANTIALIAS)
     #img = ImageOps.mirror(img).transpose(2)
     img = ImageTk.PhotoImage(img)
     canvas.create_image(0,0,image=img,anchor="nw")
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     #function to be called when mouse is clicked
     def printcoords(event):
         #outputting x and y coords to console
-        f.write(str(event.x*4)+"\t"+str(event.y*4)+"\n")
+        f.write(str(int(event.x*scale))+"\t"+str(int(event.y*scale))+"\n")
     #mouseclick event
     canvas.bind("<Button 1>",printcoords)
 

@@ -19,8 +19,8 @@ def getCenterPoints(centerPointsName):
 	with open(centerPointsName) as f:
 		for line in f:
 			nums = line.split()
-			x = int(float(nums[0]))
-			y = int(float(nums[1])) 
+			x = int(float(nums[1]))
+			y = int(float(nums[0])) 
 			if ((x,y)) in seenPoints: continue
 			centerPoints.append((x,y,float(nums[2])))
 			seenPoints.add(((x,y)))
@@ -46,7 +46,7 @@ def getHeight(x,y,centerPoints):
 	return minHeight
 
 def createOrdered3D(centerPoints,edgeSets):
-	f = open('ArastraderoTrackPointsTest.xyz', 'w')
+	f = open('LagunaSecaTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
@@ -73,7 +73,7 @@ def createOrdered3D(centerPoints,edgeSets):
 	plt.show()
 
 def createScatter3D(centerPoints,edgeSets):
-	f = open('ArastraderoTrackPointsTest.xyz', 'w')
+	f = open('LagunaSecaTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for edgeSet in edgeSets:
@@ -122,7 +122,7 @@ def checkRay(point,edgeImage,image,angle):
 	x+=math.sin(angle)
 	y+=math.cos(angle)
 	while x > 0 and x < xMax and y > 0 and y < yMax:
-		#fillPoint(int(x),int(y),edgeImage)
+		fillPoint(int(x),int(y),edgeImage)
 		if image[int(x)][int(y)] > 10:
 			fillPoint(int(x),int(y),edgeImage)
 			return
@@ -168,7 +168,7 @@ if __name__ == "__main__":
 		for col in range(radialEdges.shape[1]):
 			if radialEdges[row][col] > 1: radialEdges[row][col] = 255
 	#radialEdges = cv2.GaussianBlur(radialEdges,(5,5),0)
-	cv2.imwrite("ArastraderoEdgeImage.jpg",radialEdges)
+	cv2.imwrite("LagunaSecaEdgeImage.jpg",radialEdges)
 
 	plt.subplot(121),plt.imshow(img,cmap = 'gray')
 	plt.title('Original Image'), plt.xticks([]), plt.yticks([])

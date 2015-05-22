@@ -203,7 +203,7 @@ if __name__ == "__main__":
   im1GPS = (1,1)
   xPixtoGPS = 0
   yPixtoGPS = 0
-  for i in range(2,9):
+  for i in range(2,6):
     image2 = cv2.imread(args.im1 +str(i)+".jpg")
 	  ## Detect features and compute descriptors.
     im2GPS = (0,0)
@@ -238,5 +238,5 @@ if __name__ == "__main__":
     panorama = merge_images(image1, image2, homography, size, offset, (points1, points2))
     image1 = panorama
   print xPixtoGPS, yPixtoGPS
-  cv2.imwrite('ArastraderoPanorama.jpg', image1)
-  print 'Wrote ArastraderoPanorama.jpg'
+  cv2.imwrite('LagunaSecaPanorama.jpg', image1)
+  print 'Wrote LagunaSecaPanorama.jpg'

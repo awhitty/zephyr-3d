@@ -2,9 +2,9 @@ import numpy as np
 from scipy.ndimage import gaussian_filter1d
 import math
 
-f1 = open("ArastraderoInterpolatedCenterPoints.txt","r")
-f2 = open("ArastraderoInterpolatedGPS.txt","r")
-f3 = open("ArastraderoInterpolated.txt","w")
+f1 = open("LagunaSecaInterpolatedCenterPoints.txt","r")
+f2 = open("LagunaSecaInterpolatedGPS.txt","r")
+f3 = open("LagunaSecaInterpolated.txt","w")
 
 lines = []
 
@@ -15,13 +15,13 @@ for line in f1:
 lineNum = 0
 for line in f2:
 	vals = line.split()
-	lines[lineNum] += str((float(vals[2]) - 93.4562888001)*2)
+	lines[lineNum] += str((float(vals[2]) - 220)*2)
 	lineNum += 1
 
 for line in lines:
 	f3.write(line+"\n")
 
-# f = open("ArastraderoCenterPoints1.txt","r")
+# f = open("LagunaSecaGPS.txt","r")
 # xArr = []
 # yArr = []
 # zArr = []
@@ -49,7 +49,7 @@ for line in lines:
 # # w3 = angleArr
 
 
-# f2 = open("ArastraderoInterpolatedCenterPoints.txt","w")
+# f2 = open("LagunaSecaInterpolatedGPS.txt","w")
 # for index in range(len(x3)):
 # 	output = str(x3[index]) + " " + str(y3[index]) + " " + str(z3[index]) + "\n"
 # 	f2.write(output)
