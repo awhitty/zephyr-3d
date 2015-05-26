@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/thin-track-textured")!
+        let scene = SCNScene(named: "art.scnassets/track-with-line-2")!
         
         
         var cubeMap: [UIImage] = []
@@ -68,9 +68,9 @@ class GameViewController: UIViewController {
         
         // retrieve the ship node
         let ship = scene.rootNode.childNodeWithName("node", recursively: true)!
-        ship.scale = SCNVector3(x: 0.04, y: 0.04, z: 0.04)
-        ship.position = SCNVector3(x: -15, y: 0, z: 0)
-        ship.rotation = SCNVector4Make(1, 0, 0, CFloat( -M_PI_4 ) * 0)
+//        ship.scale = SCNVector3(x: 0.04, y: 0.04, z: 0.04)
+//        ship.position = SCNVector3(x: -15, y: 0, z: 0)
+//        ship.rotation = SCNVector4Make(1, 0, 0, CFloat( -M_PI_4 ) * 0)
         
         // animate the 3d object
 //        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1)))
