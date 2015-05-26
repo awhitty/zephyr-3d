@@ -13,10 +13,12 @@ def getCenterPoints(centerPointsName):
 	with open(centerPointsName) as f:
 		for line in f:
 			nums = line.split()
-			if ((int(float(nums[0])),int(float(nums[1])))) in seenPoints: continue
-			centerPoints.append((int(float(nums[0])),int(float(nums[1])),float(nums[2])))
-			seenPoints.add(((int(float(nums[0])),int(float(nums[1])))))
-			#centerPoints.append((int(float(nums[1])),int(float(nums[0]))))
+			x = int(float(nums[1]))
+			y = int(float(nums[0])) 
+			if ((x,y)) in seenPoints: continue
+			centerPoints.append((x,y,float(nums[2])))
+			seenPoints.add(((x,y)))
+			#centerPoints.append((y,x))
 	return centerPoints
 
 def getNearestEdge(point,img):
@@ -30,10 +32,11 @@ def getNearestEdge(point,img):
 		ray = queue.get()
 		row = x + math.sin(ray[0])*ray[1]
 		col = y + math.cos(ray[0])*ray[1]
-		if img[int(row)][int(col)][0] > 10:
-			currentAngle = ray[0]
-			return (int(row),int(col),ray[0])
-		queue.put((ray[0], ray[1]+0.1))
+		if row >= 0 and row < img.shape[0] and col >= 0 and col < img.shape[1]:
+			if img[int(row)][int(col)][0] < 10:
+				currentAngle = ray[0]
+				return (int(row),int(col),ray[0])
+			queue.put((ray[0], ray[1]+0.1))
 
 def normalizeAngle(angle):
 	while angle >= 2*math.pi:
@@ -49,7 +52,7 @@ def getOppositeEdge(point,nearestEdge,img):
 	x += math.sin(angle)*dist
 	y += math.cos(angle)*dist
 	while x >= 0 and x < img.shape[0] and y >= 0 and y < img.shape[1]:
-		if img[int(x)][int(y)][0] > 10:
+		if img[int(x)][int(y)][0] < 10:
 			return (int(x),int(y),normalizeAngle(angle))
 		x += math.sin(angle)*dist
 		y += math.cos(angle)*dist
@@ -82,6 +85,7 @@ def getCrossSections(img,centerPoints):
 		index += 1
 		print index
 		nearestEdge = getNearestEdge(point,img)
+		if not nearestEdge: continue
 		oppositeEdge = getOppositeEdge(point,nearestEdge,img)
 		if not oppositeEdge: continue
 		midpointX = (nearestEdge[0] + oppositeEdge[0])/2
@@ -105,7 +109,7 @@ if __name__ == "__main__":
 	## Load images.
 	crossSections = getCrossSections(img,centerPoints)
 
-	DisplayCrossSections.displayCrossSections(crossSections,img,"crossSections.txt")
+	DisplayCrossSections.displayCrossSections(crossSections,img,"LagunaSecaCrossSections.txt")
 
 
 

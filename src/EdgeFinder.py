@@ -110,8 +110,8 @@ def fillPoint(row,col,image):
 	xPoints.append(row)
 	yPoints.append(col)
 	image[row][col] = 255
-	for x in range(-1,2):
-		for y in range(-1,2):
+	for x in range(-2,3):
+		for y in range(-2,3):
 			image[row + x][col+y] = 255
 
 def checkRay(point,edgeImage,image,angle):

@@ -9,7 +9,7 @@ def modifyAngle(lastAngle, angle):
 	modifiedAngle = angle + sorted(angleOptions, key=lambda angleMod: abs(lastAngle - (angle + angleMod)))[0]
 	return modifiedAngle
 
-f = open("crossSectionsFinal.txt","r")
+f = open("LagunaSecaCrossSections.txt","r")
 xArr = []
 yArr = []
 distArr = []
@@ -55,7 +55,7 @@ u3 = gaussian_filter1d(u2, sigma)
 # w3 = angleArr
 
 
-f2 = open("interpolatedCrossSections.txt","w")
+f2 = open("LagunaSecaInterpolatedCrossSections.txt","w")
 for index in range(len(x3)):
 	output = str(x3[index]) + " " + str(y3[index]) + " " + str(z3[index]) +  " " + str(w3[index]) + " " + str(u3[index]) + "\n"
 	f2.write(output)

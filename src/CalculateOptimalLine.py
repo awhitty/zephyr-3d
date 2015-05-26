@@ -11,7 +11,7 @@ import TrackEdges
 from sets import Set
 import EdgeFinder
 
-MAX_ITERS = 100000
+MAX_ITERS = 1000
 LAST_TURN = 0
 EPSILON = 0
 
@@ -55,9 +55,9 @@ def calculateCurvature(linePoints):
 	return curvatureSum
 
 def writeXYZ():
-	f = open('TestBestLine.xyz', 'w')
+	f = open('LagunaSecaBestLine.xyz', 'w')
 	for point in XYZPoints:
-		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2]*10)+"\n")
+		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2]*2)+"\n")
 
 def displayLine(line,im):
 	for point in line:
@@ -66,7 +66,7 @@ def displayLine(line,im):
 		# im[int(point[0])][int(point[1])][1] = 0
 		# im[int(point[0])][int(point[1])][2] = 0
 	writeXYZ()
-	cv2.imwrite("bestLine.jpg",im)
+	cv2.imwrite("LagunaSecaBestLine.jpg",im)
 
 def inTurn(angles):
 	isInRightTurn = True
@@ -122,7 +122,7 @@ def smoothLine(line):
 		bestLineX.append(point[0])
 		bestLineY.append(point[1])
 		bestLineZ.append(point[2])
-	sigma = 10
+	sigma = 4
 	x2 = gaussian_filter1d(bestLineX, sigma)
 	y2 = gaussian_filter1d(bestLineY, sigma)
 	z2 = gaussian_filter1d(bestLineZ, sigma)
