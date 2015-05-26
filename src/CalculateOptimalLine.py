@@ -11,7 +11,7 @@ import TrackEdges
 from sets import Set
 import EdgeFinder
 
-MAX_ITERS = 1000
+MAX_ITERS = 100000
 LAST_TURN = 0
 EPSILON = 0
 
@@ -137,6 +137,8 @@ def calculateOptimal(crossSections,im):
 	locationChange = [-1,0,1]
 	for iteration in range(MAX_ITERS):
 		# print iteration
+		global LAST_TURN 
+		LAST_TURN = 0
 		line = []
 		loc = .5*crossSections[0][2]
 		index = -1
