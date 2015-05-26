@@ -58,7 +58,7 @@ def createOrdered3D(centerPoints,edgeSets):
 			yArr.append(point[1])
 			height = getHeight(point[0],point[1],centerPoints)
 			zArr.append(height)
-			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*5)+"\n")
+			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height)+"\n")
 		t = np.linspace(0, 1, len(zArr))
 		t2 = np.linspace(0, 1, len(zArr))
 
@@ -85,7 +85,7 @@ def createScatter3D(centerPoints,edgeSets):
 			yArr.append(point[1])
 			height = getHeight(point[0],point[1],centerPoints)
 			zArr.append(height)
-			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*5)+"\n")
+			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height)+"\n")
 		ax.scatter(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
