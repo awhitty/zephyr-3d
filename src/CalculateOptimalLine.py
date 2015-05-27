@@ -14,6 +14,7 @@ import EdgeFinder
 MAX_ITERS = 1
 LAST_TURN = 0
 EPSILON = 0.0
+HEIGHT_SCALE = 1.04
 
 XYZPoints = []
 
@@ -49,7 +50,7 @@ def calculateCurvature(linePoints):
 		if math.sin(angle) != 0:
 			lastChange = currentChange
 			currentChange = 1
-			curvatureSum += 2*math.sin(angle)/(distXZ*(lastChange + currentChange))
+			curvatureSum += 2*math.sin(angle)**2/(distXZ*(lastChange + currentChange))
 		else:
 			currentChange += 1
 	return curvatureSum
@@ -57,7 +58,7 @@ def calculateCurvature(linePoints):
 def writeXYZ():
 	f = open('LagunaSecaBestLine.xyz', 'w')
 	for point in XYZPoints:
-		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2]*2)+"\n")
+		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2]*HEIGHT_SCALE)+"\n")
 
 def displayLine(line,im):
 	for point in line:
