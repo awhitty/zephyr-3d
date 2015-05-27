@@ -60,7 +60,7 @@ x3 = gaussian_filter1d(xTempArr, sigma)
 y3 = gaussian_filter1d(yTempArr, sigma)
 z3 = gaussian_filter1d(distTempArr, sigma)
 w3 = gaussian_filter1d(angleTempArr, sigma)
-u3 = gaussian_filter1d(heightTempArr, sigma)
+u3 = heightTempArr #gaussian_filter1d(heightTempArr, sigma)
 
 # x3 = xArr
 # y3 = yArr
@@ -69,6 +69,6 @@ u3 = gaussian_filter1d(heightTempArr, sigma)
 
 
 f2 = open("LagunaSecaInterpolatedCrossSections.txt","w")
-for index in range(5,len(x3)-5):
+for index in range(len(x3)):
 	output = str(x3[index]) + " " + str(y3[index]) + " " + str(z3[index]) +  " " + str(w3[index]) + " " + str(u3[index]) + "\n"
 	f2.write(output)

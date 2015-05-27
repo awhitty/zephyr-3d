@@ -48,7 +48,7 @@ def getOppositeEdge(point,nearestEdge,img):
 	x = point[0]
 	y = point[1]
 	angle += math.radians(180)
-	dist = 1
+	dist = .5
 	x += math.sin(angle)*dist
 	y += math.cos(angle)*dist
 	while x >= 0 and x < img.shape[0] and y >= 0 and y < img.shape[1]:
