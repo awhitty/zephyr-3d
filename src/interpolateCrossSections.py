@@ -32,33 +32,35 @@ for line in f:
 	distTempArr.append(float(vals[2]))
 	angleTempArr.append(angle)
 	heightTempArr.append(float(vals[4]))
-for index in range(-5,len(xTempArr)):
-	xArr.append(xTempArr[index])
-	yArr.append(yTempArr[index])
-	distArr.append(distTempArr[index])
-	angleArr.append(angleTempArr[index])
-	heightArr.append(heightTempArr[index])
-for index in range(6)):
-	xArr.append(xTempArr[index])
-	yArr.append(yTempArr[index])
-	distArr.append(distTempArr[index])
-	angleArr.append(angleTempArr[index])
-	heightArr.append(heightTempArr[index])
-t = np.linspace(0,1,len(xArr))
-t2 = np.linspace(0,1,1010)
+t = np.linspace(0,1,len(xTempArr))
+t2 = np.linspace(0,1,1000)
 
-x2 = np.interp(t2,t,xArr)
-y2 = np.interp(t2,t,yArr)
-z2 = np.interp(t2,t,distArr)
-w2 = np.interp(t2,t,angleArr)
-u2 = np.interp(t2,t,heightArr)
+xTempArr = np.interp(t2,t,xTempArr)
+yTempArr = np.interp(t2,t,yTempArr)
+distTempArr = np.interp(t2,t,distTempArr)
+angleTempArr = np.interp(t2,t,angleTempArr)
+heightTempArr = np.interp(t2,t,heightTempArr)
+
+
+# for index in range(-5,len(xTempArr)):
+# 	xArr.append(xTempArr[index])
+# 	yArr.append(yTempArr[index])
+# 	distArr.append(distTempArr[index])
+# 	angleArr.append(angleTempArr[index])
+# 	heightArr.append(heightTempArr[index])
+# for index in range(6):
+# 	xArr.append(xTempArr[index])
+# 	yArr.append(yTempArr[index])
+# 	distArr.append(distTempArr[index])
+# 	angleArr.append(angleTempArr[index])
+# 	heightArr.append(heightTempArr[index])
 
 sigma = 2
-x3 = gaussian_filter1d(x2, sigma)
-y3 = gaussian_filter1d(y2, sigma)
-z3 = gaussian_filter1d(z2, sigma)
-w3 = gaussian_filter1d(w2, sigma)
-u3 = gaussian_filter1d(u2, sigma)
+x3 = gaussian_filter1d(xTempArr, sigma)
+y3 = gaussian_filter1d(yTempArr, sigma)
+z3 = gaussian_filter1d(distTempArr, sigma)
+w3 = gaussian_filter1d(angleTempArr, sigma)
+u3 = gaussian_filter1d(heightTempArr, sigma)
 
 # x3 = xArr
 # y3 = yArr
