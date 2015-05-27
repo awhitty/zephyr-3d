@@ -18,6 +18,7 @@ xArr2 = []
 yArr2 = []
 zArr2 = []
 
+HEIGHT_SCALE = 1.04
 
 def displayCrossSections(crossSections, img, name):
 	img2 = np.zeros((img.shape[0],img.shape[1],3), np.float32)
@@ -63,8 +64,8 @@ def plotTrack(crossSections,centerPoints):
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	for index in range(len(xArr1)):
-		zArr1.append(EdgeFinder.getHeight(xArr1[index],yArr1[index],centerPoints))
-		zArr2.append(EdgeFinder.getHeight(xArr2[index],yArr2[index],centerPoints))	
+		zArr1.append(EdgeFinder.getHeight(xArr1[index],yArr1[index],centerPoints)*HEIGHT_SCALE)
+		zArr2.append(EdgeFinder.getHeight(xArr2[index],yArr2[index],centerPoints)*HEIGHT_SCALE)	
 	t = np.linspace(0, 1, len(zArr1))
 	t2 = np.linspace(0, 1, len(zArr1))
 
@@ -81,8 +82,8 @@ def plotTrack(crossSections,centerPoints):
 	x23 = gaussian_filter1d(x22, sigma)
 	y23 = gaussian_filter1d(y22, sigma)
 	z23 = gaussian_filter1d(z22, sigma)
-	ax.plot(x13,y13,z13,color = 'b')
-	ax.plot(x23,y23,z23,color = 'b')
+	ax.plot(z13,y13,x13,color = 'b')
+	ax.plot(z23,y23,x23,color = 'b')
 	plt.show()
 
 

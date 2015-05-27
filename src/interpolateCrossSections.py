@@ -10,6 +10,11 @@ def modifyAngle(lastAngle, angle):
 	return modifiedAngle
 
 f = open("LagunaSecaCrossSections.txt","r")
+xTempArr = []
+yTempArr = []
+distTempArr = []
+angleTempArr = []
+heightTempArr = []
 xArr = []
 yArr = []
 distArr = []
@@ -21,20 +26,26 @@ for line in f:
 	angle = float(vals[3])
 	if lastAngle != None:
 		angle = modifyAngle(lastAngle,angle)
-		# if shouldSwitch(lastAngle,angle):
-		# 	print "switched1"
-		# 	angle = (angle + math.pi)%(2*math.pi)
-		# elif abs(lastAngle - angle - math.pi) < abs(lastAngle - angle):
-		# 	print "switched2"
-		# 	angle += math.pi
 	lastAngle = angle
-	xArr.append(float(vals[0]))
-	yArr.append(float(vals[1]))
-	distArr.append(float(vals[2]))
-	angleArr.append(angle)
-	heightArr.append(float(vals[4]))
+	xTempArr.append(float(vals[0]))
+	yTempArr.append(float(vals[1]))
+	distTempArr.append(float(vals[2]))
+	angleTempArr.append(angle)
+	heightTempArr.append(float(vals[4]))
+for index in range(-5,len(xTempArr)):
+	xArr.append(xTempArr[index])
+	yArr.append(yTempArr[index])
+	distArr.append(distTempArr[index])
+	angleArr.append(angleTempArr[index])
+	heightArr.append(heightTempArr[index])
+for index in range(6)):
+	xArr.append(xTempArr[index])
+	yArr.append(yTempArr[index])
+	distArr.append(distTempArr[index])
+	angleArr.append(angleTempArr[index])
+	heightArr.append(heightTempArr[index])
 t = np.linspace(0,1,len(xArr))
-t2 = np.linspace(0,1,1000)
+t2 = np.linspace(0,1,1010)
 
 x2 = np.interp(t2,t,xArr)
 y2 = np.interp(t2,t,yArr)
@@ -56,6 +67,6 @@ u3 = gaussian_filter1d(u2, sigma)
 
 
 f2 = open("LagunaSecaInterpolatedCrossSections.txt","w")
-for index in range(len(x3)):
+for index in range(5,len(x3)-5):
 	output = str(x3[index]) + " " + str(y3[index]) + " " + str(z3[index]) +  " " + str(w3[index]) + " " + str(u3[index]) + "\n"
 	f2.write(output)

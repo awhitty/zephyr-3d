@@ -13,6 +13,8 @@ xPoints = []
 yPoints = []
 zPoints = []
 
+HEIGHT_SCALE = 1.04
+
 def getCenterPoints(centerPointsName):
 	centerPoints = []
 	seenPoints = Set()
@@ -49,6 +51,7 @@ def createOrdered3D(centerPoints,edgeSets):
 	f = open('LagunaSecaTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
+	ax.set_zbound(lower=0, upper=1400)
 	for edgeSet in edgeSets:
 		xArr = []
 		yArr = []
@@ -56,9 +59,9 @@ def createOrdered3D(centerPoints,edgeSets):
 		for point in edgeSet:
 			xArr.append(point[0])
 			yArr.append(point[1])
-			height = getHeight(point[0],point[1],centerPoints)
+			height = getHeight(point[0],point[1],centerPoints)*HEIGHT_SCALE
 			zArr.append(height)
-			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*2)+"\n")
+			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height)+"\n")
 		t = np.linspace(0, 1, len(zArr))
 		t2 = np.linspace(0, 1, len(zArr))
 
@@ -76,6 +79,7 @@ def createScatter3D(centerPoints,edgeSets):
 	f = open('LagunaSecaTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
+	ax.set_zbound(lower=0, upper=1400)
 	for edgeSet in edgeSets:
 		xArr = []
 		yArr = []
@@ -83,9 +87,9 @@ def createScatter3D(centerPoints,edgeSets):
 		for point in edgeSet:
 			xArr.append(point[0])
 			yArr.append(point[1])
-			height = getHeight(point[0],point[1],centerPoints)
+			height = getHeight(point[0],point[1],centerPoints)*HEIGHT_SCALE
 			zArr.append(height)
-			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height*2)+"\n")
+			f.write(str(point[0]) + " "+ str(point[1]) + " " + str(height)+"\n")
 		ax.scatter(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
