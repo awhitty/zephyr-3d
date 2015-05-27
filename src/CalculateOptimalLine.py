@@ -174,8 +174,8 @@ def calculateOptimal(crossSections,im):
 			index += 1
 			weights = calculateWeights(crossSections,index,loc)
 			loc += choice(locationChange,p=weights)
-			loc = min(loc,.5*crossSection[2])
-			loc = max(loc,-.5*crossSection[2])
+			loc = min(loc,.5*crossSection[2]-1)
+			loc = max(loc,-.5*crossSection[2]+1)
 			angle = crossSection[3]
 			x = crossSection[0] + math.sin(angle)*loc
 			y = crossSection[1] + math.cos(angle)*loc
