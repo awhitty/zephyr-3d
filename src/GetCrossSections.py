@@ -6,6 +6,7 @@ from sets import Set
 import DisplayCrossSections
 
 currentAngle = 0
+name = ''
 
 def getCenterPoints(centerPointsName):
 	centerPoints = []
@@ -101,15 +102,19 @@ if __name__ == "__main__":
 	parser = ap.ArgumentParser()
 	parser.add_argument('im')
 	parser.add_argument('centerPoints')
+	parser.add_argument('name')
+
 	args = parser.parse_args()
 
+	global name
+	name = args.name
 	img = cv2.imread(args.im)
 
 	centerPoints = getCenterPoints(args.centerPoints)
 	## Load images.
 	crossSections = getCrossSections(img,centerPoints)
 
-	DisplayCrossSections.displayCrossSections(crossSections,img,"LagunaSecaCrossSections.txt")
+	DisplayCrossSections.displayCrossSections(crossSections,img,name + "CrossSections.txt")
 
 
 
