@@ -48,7 +48,7 @@ def getHeight(x,y,centerPoints):
 	return minHeight
 
 def createOrdered3D(centerPoints,edgeSets):
-	f = open('LagunaSecaTrackPointsTest.xyz', 'w')
+	f = open('SkylineTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	ax.set_zbound(lower=0, upper=1400)
@@ -76,7 +76,7 @@ def createOrdered3D(centerPoints,edgeSets):
 	plt.show()
 
 def createScatter3D(centerPoints,edgeSets):
-	f = open('LagunaSecaTrackPointsTest.xyz', 'w')
+	f = open('SkylineTrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	ax.set_zbound(lower=0, upper=1400)
@@ -172,7 +172,7 @@ if __name__ == "__main__":
 		for col in range(radialEdges.shape[1]):
 			if radialEdges[row][col] > 1: radialEdges[row][col] = 255
 	#radialEdges = cv2.GaussianBlur(radialEdges,(5,5),0)
-	cv2.imwrite("LagunaSecaEdgeImage.jpg",radialEdges)
+	cv2.imwrite("SkylineEdgeImage.jpg",radialEdges)
 
 	plt.subplot(121),plt.imshow(img,cmap = 'gray')
 	plt.title('Original Image'), plt.xticks([]), plt.yticks([])

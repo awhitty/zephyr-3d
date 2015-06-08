@@ -192,6 +192,7 @@ if __name__ == "__main__":
   
   parser = ap.ArgumentParser()
   parser.add_argument('im1')
+  parser.add_argument('name')
   parser.add_argument('-a', '--algorithm', 
                       help='feature detection algorithm',
                       choices=['SURF', 'SIFT'],
@@ -203,7 +204,7 @@ if __name__ == "__main__":
   im1GPS = (1,1)
   xPixtoGPS = 0
   yPixtoGPS = 0
-  for i in range(2,6):
+  for i in range(2,5):
     image2 = cv2.imread(args.im1 +str(i)+".jpg")
 	  ## Detect features and compute descriptors.
     im2GPS = (0,0)
@@ -238,5 +239,5 @@ if __name__ == "__main__":
     panorama = merge_images(image1, image2, homography, size, offset, (points1, points2))
     image1 = panorama
   print xPixtoGPS, yPixtoGPS
-  cv2.imwrite('LagunaSecaPanorama.jpg', image1)
-  print 'Wrote LagunaSecaPanorama.jpg'
+  cv2.imwrite(args.name+'Panorama.jpg', image1)
+  print 'Wrote '+args.name+'Panorama.jpg'
