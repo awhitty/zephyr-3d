@@ -14,6 +14,7 @@ import EdgeFinder
 MAX_ITERS = 1
 LAST_TURN = 0
 EPSILON = 0.0
+HEIGHT_SCALE = 5
 name = ''
 
 XYZPoints = []
@@ -190,7 +191,7 @@ def calculateOptimal(crossSections,im):
 			angle = crossSection[3]
 			x = crossSection[0] + math.sin(angle)*loc
 			y = crossSection[1] + math.cos(angle)*loc
-			z = crossSection[4]
+			z = crossSection[4]*HEIGHT_SCALE
 			line.append((x,y,z))
 		curvature = calculateCurvature(line)
 		if curvature < bestCurvature:

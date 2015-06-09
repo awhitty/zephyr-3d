@@ -13,7 +13,8 @@ xPoints = []
 yPoints = []
 zPoints = []
 
-HEIGHT_SCALE = 1.04
+HEIGHT_SCALE = 5
+name = ""
 
 def getCenterPoints(centerPointsName):
 	centerPoints = []
@@ -48,7 +49,7 @@ def getHeight(x,y,centerPoints):
 	return minHeight
 
 def createOrdered3D(centerPoints,edgeSets):
-	f = open('SkylineTrackPointsTest.xyz', 'w')
+	f = open(name + 'TrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	ax.set_zbound(lower=0, upper=1400)
@@ -76,7 +77,7 @@ def createOrdered3D(centerPoints,edgeSets):
 	plt.show()
 
 def createScatter3D(centerPoints,edgeSets):
-	f = open('SkylineTrackPointsTest.xyz', 'w')
+	f = open(name + 'TrackPointsTest.xyz', 'w')
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 	ax.set_zbound(lower=0, upper=1400)
@@ -157,9 +158,12 @@ if __name__ == "__main__":
 	parser = ap.ArgumentParser()
 	parser.add_argument('im')
 	parser.add_argument('centerPoints')
+	parser.add_argument('name')
 
 	args = parser.parse_args()
 	centerPoints = getCenterPoints(args.centerPoints)
+	global name
+	name = args.name
 	## Load images.
 	img = cv2.imread(args.im)
 	blur = cv2.GaussianBlur(img,(3,3),0)
@@ -172,7 +176,7 @@ if __name__ == "__main__":
 		for col in range(radialEdges.shape[1]):
 			if radialEdges[row][col] > 1: radialEdges[row][col] = 255
 	#radialEdges = cv2.GaussianBlur(radialEdges,(5,5),0)
-	cv2.imwrite("SkylineEdgeImage.jpg",radialEdges)
+	cv2.imwrite(name + "EdgeImage.jpg",radialEdges)
 
 	plt.subplot(121),plt.imshow(img,cmap = 'gray')
 	plt.title('Original Image'), plt.xticks([]), plt.yticks([])
