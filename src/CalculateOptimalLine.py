@@ -11,10 +11,11 @@ import TrackEdges
 from sets import Set
 import EdgeFinder
 
-MAX_ITERS = 1
+MAX_ITERS = 10000
 LAST_TURN = 0
 EPSILON = 0.0
 HEIGHT_SCALE = 1.04
+name = ''
 
 XYZPoints = []
 
@@ -56,7 +57,7 @@ def calculateCurvature(linePoints):
 	return curvatureSum
 
 def writeXYZ():
-	f = open('LagunaSecaBestLine.xyz', 'w')
+	f = open(name + 'BestLine.xyz', 'w')
 	for point in XYZPoints:
 		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2]*HEIGHT_SCALE)+"\n")
 
@@ -67,7 +68,7 @@ def displayLine(line,im):
 		# im[int(point[0])][int(point[1])][1] = 0
 		# im[int(point[0])][int(point[1])][2] = 0
 	writeXYZ()
-	cv2.imwrite("LagunaSecaBestLine.jpg",im)
+	cv2.imwrite(name + "BestLine.jpg",im)
 
 def inTurn(angles):
 	isInRightTurn = True
@@ -76,8 +77,8 @@ def inTurn(angles):
 	isInLeftTurn = True
 	for index in range(1,len(angles)):
 		if angles[index] <= angles[index-1] + EPSILON: isInLeftTurn = False
-	if isInRightTurn: return -1
-	if isInLeftTurn: return 1
+	if isInRightTurn: return 1
+	if isInLeftTurn: return -1
 	return 0
 
 def calculateWeights(crossSections,index,position):
@@ -90,56 +91,56 @@ def calculateWeights(crossSections,index,position):
 	secondChange = inTurn(angles[11:20])#angles[8] - angles[5]
 	global LAST_TURN
 	if inTurn(angles) != 0: LAST_TURN = position
-	# if firstChange > 0:
-	# 	if secondChange > 0:
-	# 		return [.2,.2,.6]
-	# 	elif secondChange < 0:
-	# 		return [.6,.2,.2]
-	# 	else:
-	# 		return [.6,.2,.2]
-	# elif firstChange < 0:
-	# 	if secondChange > 0:
-	# 		return [.2,.2,.6]
-	# 	elif secondChange < 0:
-	# 		return [.6,.2,.2]
-	# 	else:
-	# 		return [.2,.2,.6]
-	# else:
-	# 	if secondChange > 0:
-	# 		return [.2,.2,.6]
-	# 	elif secondChange < 0:
-	# 		return [.6,.2,.2]
-	# 	# elif LAST_TURN > 0:
-	# 	# 	return [.2,.2,.6]
-	# 	# elif LAST_TURN < 0:
-	# 	# 	return [.6,.2,.2]
-	# 	else:
-	# 		return [.2,.6,.2]
 	if firstChange > 0:
 		if secondChange > 0:
-			return [0,0,1]
+			return [.2,.2,.6]
 		elif secondChange < 0:
-			return [1,0,0]
+			return [.6,.2,.2]
 		else:
-			return [1,0,0]
+			return [.6,.2,.2]
 	elif firstChange < 0:
 		if secondChange > 0:
-			return [0,0,1]
+			return [.2,.2,.6]
 		elif secondChange < 0:
-			return [1,0,0]
+			return [.6,.2,.2]
 		else:
-			return [0,0,1]
+			return [.2,.2,.6]
 	else:
 		if secondChange > 0:
-			return [0,0,1]
+			return [.2,.2,.6]
 		elif secondChange < 0:
-			return [1,0,0]
+			return [.6,.2,.2]
 		# elif LAST_TURN > 0:
-		# 	return [0,0,1]
+		# 	return [.2,.2,.6]
 		# elif LAST_TURN < 0:
-		# 	return [1,0,0]
+		# 	return [.6,.2,.2]
 		else:
-			return [0,1,0]
+			return [.2,.6,.2]
+	# if firstChange > 0:
+	# 	if secondChange > 0:
+	# 		return [0,0,1]
+	# 	elif secondChange < 0:
+	# 		return [1,0,0]
+	# 	else:
+	# 		return [1,0,0]
+	# elif firstChange < 0:
+	# 	if secondChange > 0:
+	# 		return [0,0,1]
+	# 	elif secondChange < 0:
+	# 		return [1,0,0]
+	# 	else:
+	# 		return [0,0,1]
+	# else:
+	# 	if secondChange > 0:
+	# 		return [0,0,1]
+	# 	elif secondChange < 0:
+	# 		return [1,0,0]
+	# 	# elif LAST_TURN > 0:
+	# 	# 	return [0,0,1]
+	# 	# elif LAST_TURN < 0:
+	# 	# 	return [1,0,0]
+	# 	else:
+	# 		return [0,1,0]
 
 
 def smoothLine(line):
@@ -195,9 +196,12 @@ if __name__ == "__main__":
 	parser = ap.ArgumentParser()
 	parser.add_argument('im')
 	parser.add_argument('crossSections')
+	parser.add_argument('name')
 	args = parser.parse_args()
 
 	img = cv2.imread(args.im)
+	global name
+	name = args.name
 	crossSections = []
 
 	with open(args.crossSections) as f:

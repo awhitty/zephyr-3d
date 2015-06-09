@@ -2,6 +2,8 @@ import numpy as np
 from scipy.ndimage import gaussian_filter1d
 import math
 
+name = "Skyline"
+
 def modifyAngle(lastAngle, angle):
 	angleOptions = []
 	for coeff in range(-3,3):
@@ -9,7 +11,7 @@ def modifyAngle(lastAngle, angle):
 	modifiedAngle = angle + sorted(angleOptions, key=lambda angleMod: abs(lastAngle - (angle + angleMod)))[0]
 	return modifiedAngle
 
-f = open("LagunaSecaCrossSections.txt","r")
+f = open(name + "CrossSections.txt","r")
 xTempArr = []
 yTempArr = []
 distTempArr = []
@@ -68,7 +70,7 @@ u3 = heightTempArr #gaussian_filter1d(heightTempArr, sigma)
 # w3 = angleArr
 
 
-f2 = open("LagunaSecaInterpolatedCrossSections.txt","w")
+f2 = open(name + "InterpolatedCrossSections.txt","w")
 for index in range(len(x3)):
 	output = str(x3[index]) + " " + str(y3[index]) + " " + str(z3[index]) +  " " + str(w3[index]) + " " + str(u3[index]) + "\n"
 	f2.write(output)

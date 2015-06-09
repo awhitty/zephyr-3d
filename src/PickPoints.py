@@ -5,21 +5,28 @@ from PIL import ImageOps
 import ImageTk
 import cv2, numpy as np
 import argparse as ap
+
+name= ''
 # f = open('ArastraderoCenterPoints.txt','w')
-f = open('TestGPSDist.txt','w')
+f = None
 # 37.38304, -122.19282
 # 168   1476
 # 37.386916, -122.174791
 #  ccd3680   540
-scale = 1.5
+scale = 2
 
 if __name__ == "__main__":
     root = Tk()
     parser = ap.ArgumentParser()
     parser.add_argument('im')
+    parser.add_argument('name')
 
     args = parser.parse_args()
 
+    global name 
+    name = args.name
+    global f
+    f = open(name + 'GPSDist.txt','w')
     #setting up a tkinter canvas with scrollbars
     frame = Frame(root, bd=2, relief=SUNKEN)
     frame.grid_rowconfigure(0, weight=1)
@@ -45,7 +52,7 @@ if __name__ == "__main__":
     #function to be called when mouse is clicked
     def printcoords(event):
         #outputting x and y coords to console
-        f.write(str(int(event.x*scale))+"\t"+str(int(event.y*scale))+"\n")
+        f.write(str(int(event.x*scale))+"\t"+str(int(event.y*scale)) + "\t 0" + "\n")
     #mouseclick event
     canvas.bind("<Button 1>",printcoords)
 
