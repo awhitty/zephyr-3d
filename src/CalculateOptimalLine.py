@@ -11,10 +11,9 @@ import TrackEdges
 from sets import Set
 import EdgeFinder
 
-MAX_ITERS = 10000
+MAX_ITERS = 1
 LAST_TURN = 0
 EPSILON = 0.0
-HEIGHT_SCALE = 1.04
 name = ''
 
 XYZPoints = []
@@ -59,7 +58,7 @@ def calculateCurvature(linePoints):
 def writeXYZ():
 	f = open(name + 'BestLine.xyz', 'w')
 	for point in XYZPoints:
-		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2]*HEIGHT_SCALE)+"\n")
+		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2])+"\n")
 
 def displayLine(line,im):
 	for point in line:
@@ -77,8 +76,8 @@ def inTurn(angles):
 	isInLeftTurn = True
 	for index in range(1,len(angles)):
 		if angles[index] <= angles[index-1] + EPSILON: isInLeftTurn = False
-	if isInRightTurn: return 1
-	if isInLeftTurn: return -1
+	if isInRightTurn: return -1
+	if isInLeftTurn: return 1
 	return 0
 
 def calculateWeights(crossSections,index,position):
@@ -116,31 +115,42 @@ def calculateWeights(crossSections,index,position):
 		# 	return [.6,.2,.2]
 		else:
 			return [.2,.6,.2]
-	# if firstChange > 0:
-	# 	if secondChange > 0:
-	# 		return [0,0,1]
-	# 	elif secondChange < 0:
-	# 		return [1,0,0]
-	# 	else:
-	# 		return [1,0,0]
-	# elif firstChange < 0:
-	# 	if secondChange > 0:
-	# 		return [0,0,1]
-	# 	elif secondChange < 0:
-	# 		return [1,0,0]
-	# 	else:
-	# 		return [0,0,1]
-	# else:
-	# 	if secondChange > 0:
-	# 		return [0,0,1]
-	# 	elif secondChange < 0:
-	# 		return [1,0,0]
-	# 	# elif LAST_TURN > 0:
-	# 	# 	return [0,0,1]
-	# 	# elif LAST_TURN < 0:
-	# 	# 	return [1,0,0]
-	# 	else:
-	# 		return [0,1,0]
+
+def calculateTestWeights(crossSections,index,position):
+	if index < 10 or index > len(crossSections)-11:
+		return [.2,.6,.2]
+	angles = []
+	for delta in range(-10,11):
+		angles.append(crossSections[index + delta][3])
+	firstChange = inTurn(angles[0:10])#angles[3] - angles[0]
+	secondChange = inTurn(angles[11:20])#angles[8] - angles[5]
+	global LAST_TURN
+	if inTurn(angles) != 0: LAST_TURN = position
+	if firstChange > 0:
+		if secondChange > 0:
+			return [0,0,1]
+		elif secondChange < 0:
+			return [1,0,0]
+		else:
+			return [1,0,0]
+	elif firstChange < 0:
+		if secondChange > 0:
+			return [0,0,1]
+		elif secondChange < 0:
+			return [1,0,0]
+		else:
+			return [0,0,1]
+	else:
+		if secondChange > 0:
+			return [0,0,1]
+		elif secondChange < 0:
+			return [1,0,0]
+		# elif LAST_TURN > 0:
+		# 	return [0,0,1]
+		# elif LAST_TURN < 0:
+		# 	return [1,0,0]
+		else:
+			return [0,1,0]
 
 
 def smoothLine(line):
@@ -154,7 +164,7 @@ def smoothLine(line):
 	sigma = 4
 	x2 = gaussian_filter1d(bestLineX, sigma)
 	y2 = gaussian_filter1d(bestLineY, sigma)
-	z2 = gaussian_filter1d(bestLineZ, sigma)
+	z2 = bestLineZ#gaussian_filter1d(bestLineZ, sigma)
 	smoothLine = []
 	for index in range(len(x2)):
 		smoothLine.append((x2[index],y2[index],z2[index]))
@@ -173,7 +183,7 @@ def calculateOptimal(crossSections,im):
 		index = -1
 		for crossSection in crossSections:
 			index += 1
-			weights = calculateWeights(crossSections,index,loc)
+			weights = calculateTestWeights(crossSections,index,loc)
 			loc += choice(locationChange,p=weights)
 			loc = min(loc,.5*crossSection[2]-1)
 			loc = max(loc,-.5*crossSection[2]+1)

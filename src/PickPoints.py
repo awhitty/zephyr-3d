@@ -7,14 +7,13 @@ import cv2, numpy as np
 import argparse as ap
 
 name= ''
-# f = open('ArastraderoCenterPoints.txt','w')
 f = None
-# 37.38304, -122.19282
-# 168   1476
-# 37.386916, -122.174791
-#  ccd3680   540
+# If the image is too large (doesn't fit on single screen), scale is used to unify point coordinates
 scale = 2
 
+# This script allows for simulation of car data to be used as center points in 
+# later scripts. Pulls up an image and allows user to click where the car was
+# and stores the points in order.
 if __name__ == "__main__":
     root = Tk()
     parser = ap.ArgumentParser()
@@ -26,7 +25,7 @@ if __name__ == "__main__":
     global name 
     name = args.name
     global f
-    f = open(name + 'GPSDist.txt','w')
+    f = open(name + 'CenterPoints.txt','w')
     #setting up a tkinter canvas with scrollbars
     frame = Frame(root, bd=2, relief=SUNKEN)
     frame.grid_rowconfigure(0, weight=1)

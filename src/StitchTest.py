@@ -2,6 +2,9 @@
 import cv2, numpy as np
 import math
 import argparse as ap
+import sys
+import os.path
+import re
 
 DEBUG = False
 
@@ -187,11 +190,17 @@ def draw_correspondences(image1, image2, points1, points2):
 
   return image
 
+# Sorts the track image files numerically rather than alphabetically
+def alphaNumericSort(value):
+  number = re.findall(r'\d+', value)[0]
+  return int(number)
 
+# This script takes multiple images in a folder that have overlapping portions
+# and stitches them together.
 if __name__ == "__main__":
   
   parser = ap.ArgumentParser()
-  parser.add_argument('im1')
+  parser.add_argument('imFolder')
   parser.add_argument('name')
   parser.add_argument('-a', '--algorithm', 
                       help='feature detection algorithm',
@@ -199,13 +208,22 @@ if __name__ == "__main__":
                       default='SURF')
   
   args = parser.parse_args()
-  ## Load images.
-  image1 = cv2.imread(args.im1+"1.jpg")
   im1GPS = (1,1)
   xPixtoGPS = 0
   yPixtoGPS = 0
-  for i in range(2,5):
-    image2 = cv2.imread(args.im1 +str(i)+".jpg")
+  # Loop over all the images of the track to stitch them together
+  firstIteration = True
+  image1 = None
+  fileNames = os.listdir(args.imFolder)
+  fileNames.sort(key=alphaNumericSort)
+  for filename in fileNames:
+    filename = args.imFolder + "/" + filename
+    print filename
+    if firstIteration:
+      image1 = cv2.imread(str(filename))
+      firstIteration = False
+      continue
+    image2 = cv2.imread(str(filename))
 	  ## Detect features and compute descriptors.
     im2GPS = (0,0)
     (keypoints1, descriptors1) = extract_features(image1, algorithm=args.algorithm)

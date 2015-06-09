@@ -8,6 +8,7 @@ import DisplayCrossSections
 currentAngle = 0
 name = ''
 
+# Given a filename consisting of a list of center points, read them and store them in a list
 def getCenterPoints(centerPointsName):
 	centerPoints = []
 	seenPoints = Set()
@@ -19,9 +20,10 @@ def getCenterPoints(centerPointsName):
 			if ((x,y)) in seenPoints: continue
 			centerPoints.append((x,y,float(nums[2])))
 			seenPoints.add(((x,y)))
-			#centerPoints.append((y,x))
 	return centerPoints
 
+# Given a center point, searches for the nearest edge in the edge image by expanding radially 
+# with an ever increasing radius
 def getNearestEdge(point,img):
 	x = point[0]
 	y = point[1]
@@ -39,11 +41,15 @@ def getNearestEdge(point,img):
 				return (int(row),int(col),ray[0])
 			queue.put((ray[0], ray[1]+0.1))
 
+# Normalizes angle to be between -pi and +pi
 def normalizeAngle(angle):
 	while angle >= 2*math.pi:
 		angle -= 2*math.pi
 	return angle
 
+# Given a center point and the nearest edge to that point, search linearly
+# in the opposite direction until it finds the corresponding edge on the 
+# other side of the track.
 def getOppositeEdge(point,nearestEdge,img):
 	(x,y,angle) = nearestEdge
 	x = point[0]
@@ -57,27 +63,12 @@ def getOppositeEdge(point,nearestEdge,img):
 			return (int(x),int(y),normalizeAngle(angle))
 		x += math.sin(angle)*dist
 		y += math.cos(angle)*dist
-	# if point[0] == nearestEdge[0]:
-	# 	slope = 1
-	# else: 
-	# 	slope = (point[1]-nearestEdge[1])/float(point[0]-nearestEdge[0])
-	# signX = 1
-	# signY = 1
-	# if (point[0]-nearestEdge[0]) < 0: 
-	# 	signX = -1
-	# 	signY = -1
-	# if (point[0]-nearestEdge[0]) == 0:
-	# 	signX = 0
-	# 	if (point[1]-nearestEdge[1]) < 0:
-	# 		signY = -1
-	# x = point[0] + signX
-	# y = point[1] + slope*signY
-	# while  x >= 0 and x < img.shape[0] and y >= 0 and y < img.shape[1]:
-	# 	if img[int(x)][int(y)][0] > 10:
-	# 		return (int(x),int(y),slope)
-	# 	x += signX
-	# 	y += slope*signY
 
+# Given a list of center points in an image of edges, for each point finds
+# the nearest edge and the corresponding opposite edge. Stores a cross crossSection
+# as the coordinates of the midpoint of the cross section, the length (dist) of the 
+# cross section, the angle of the cross section, and the height of the cross section
+# in that order. Returns a list of cross sections
 def getCrossSections(img,centerPoints):
 	crossSections = []
 	index = -1
@@ -97,7 +88,9 @@ def getCrossSections(img,centerPoints):
 		previousDist = dist
 		crossSections.append((midpointX,midpointY,dist,oppositeEdge[2], point[2]))
 	return crossSections
-
+	
+# This script is called to translate an edge image in which the track is filled in white
+# into cross section representation which our algorithm uses to calculate the optimal line
 if __name__ == "__main__":
 	parser = ap.ArgumentParser()
 	parser.add_argument('im')

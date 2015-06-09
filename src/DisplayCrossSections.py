@@ -18,8 +18,11 @@ xArr2 = []
 yArr2 = []
 zArr2 = []
 
+# Since height is not scaled in picture, this is used to translate height in meters to height in voxels
 HEIGHT_SCALE = 1.04
 
+# Used mainly for debugging, this function superimposes the cross sections over the image they are taken from,
+# prints out just the cross sections over a black background, and prints our the edges and center points
 def displayCrossSections(crossSections, img, name):
 	img2 = np.zeros((img.shape[0],img.shape[1],3), np.float32)
 	img3 = np.zeros((img.shape[0],img.shape[1],3), np.float32)
@@ -60,6 +63,9 @@ def displayCrossSections(crossSections, img, name):
 	cv2.imwrite("centerPoints2.jpg",img2)
 	cv2.imwrite("centerPoints3.jpg",img3)
 
+# Plots a 3d representation of the track based on the cross section edges. This is a very sparse model
+# that only includes two lines, one for each edge of the track, so it renders very quickly and is easily 
+# interacted with
 def plotTrack(crossSections,centerPoints):
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
@@ -86,7 +92,8 @@ def plotTrack(crossSections,centerPoints):
 	ax.plot(z23,y23,x23,color = 'b')
 	plt.show()
 
-
+# This entire script is used mainly for debugging and visualizing the cross sections to make
+# that everything is as it should be. Outputs multiple images as visual representation
 if __name__ == "__main__":
 	parser = ap.ArgumentParser()
 	parser.add_argument('im')

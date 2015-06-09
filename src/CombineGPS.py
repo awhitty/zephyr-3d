@@ -2,6 +2,10 @@ import numpy as np
 from scipy.ndimage import gaussian_filter1d
 import math
 
+# Since we don't have car data, we have simulated data from manually picking
+# points on an image and getting gps elevation data. This combines the two
+# data sets so that they are in one file
+
 f1 = open("SkylineInterpolatedCenterPoints.txt","r")
 f2 = open("SkylineInterpolatedGPS.txt","r")
 f3 = open("SkylineInterpolated.txt","w")
