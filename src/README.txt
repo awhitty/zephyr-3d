@@ -172,3 +172,31 @@ STEPS TO RUN PIPELINE:
 12. Use .xyz files to move model into app
 
 If using real car data, you can skip steps 3 and 4, and just call interpolatePoints on just the single list of car coordinates for step 5
+
+
+Instructions for transforming .xyz file into model for iOS
+
+1. Open Meshlab (hit cmd + l to view the layers pane)
+2. Import the XYZ file containing the point cloud
+3. Apply Poisson Disk Sampling (# samples: 50000, base mesh sampling: true, oversampling: 200)
+This takes a random sampling of the point cloud and introduces mesh lab readable points in a space. We can't handle all the points coming from the XYZ file, it's too many, so we take a random sampling. Poisson works the best.
+4. With the new samples layer selected, compute normals for point set using the filter of the same name. Neighbor num: 100, smooth iteration: 0
+5. Now apply Marching Cubes (APSS) filter, which will create a mesh surface. MLS Filter Scale: 1.7, Projection Accuracy: 0.00001, Grid Resolution: 500
+6. Now time to smooth the result. Apply a laplacian smoothing algorithm until the desired result.
+7. Export as a DAE file to import into Blender for texture adding.
+
+Note: Blender will simplify these next steps
+
+8. Clear material properties of mesh
+9. Employ cycles render
+10. Add a new material from an image source (or another source if necessary)
+11. Switch to composting mode to begin placing texture
+12. Unwrap the UV Wrap of the mesh
+13. Select the texture and place texture on correct location on the mesh
+14. Switch to texture mode to edit placement/visual accuracy
+
+15. Add a modifier to the mesh
+16. Modify the mesh using the solidifier
+17. Increase the thickness -- toggle until realistic/appealing height for user
+18. Set the offset to 0.00
+
