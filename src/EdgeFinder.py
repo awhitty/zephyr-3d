@@ -16,6 +16,7 @@ zPoints = []
 HEIGHT_SCALE = 5
 name = ""
 
+# This method takes in the file name of an ordered list of car coordinates and stores them for later use
 def getCenterPoints(centerPointsName):
 	centerPoints = []
 	seenPoints = Set()
@@ -30,6 +31,8 @@ def getCenterPoints(centerPointsName):
 			#centerPoints.append((y,x))
 	return centerPoints
 
+# Finds the nearest center point with an associated height to use as the height for that voxel
+# of the racetrack
 def getHeight(x,y,centerPoints):
 	minDist = float("inf")
 	secondDist = float("inf")
@@ -48,6 +51,9 @@ def getHeight(x,y,centerPoints):
 	height = secondHeight*(1  - (1/(1 + (minDist/secondDist)**4))) + minHeight*(1/(1 + (minDist/secondDist)**4))
 	return minHeight
 
+# Attempted to draw the race track edges in one ordered and continuous line. Had difficulties creating
+# one continuous line, and was made obsolete by calculating cross sections and plotting the edges
+# of those sections in order. We didn't want to delete code though, so this is obsolete
 def createOrdered3D(centerPoints,edgeSets):
 	f = open(name + 'TrackPointsTest.xyz', 'w')
 	fig = plt.figure()
@@ -76,6 +82,8 @@ def createOrdered3D(centerPoints,edgeSets):
 		ax.plot(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
+# For every filled in pixel of the edge image, plots the point in 3d creating a scatter
+# plot of points. This is saved in an xyz file to create the mesh used for the iOS app
 def createScatter3D(centerPoints,edgeSets):
 	f = open(name + 'TrackPointsTest.xyz', 'w')
 	fig = plt.figure()
@@ -94,7 +102,9 @@ def createScatter3D(centerPoints,edgeSets):
 		ax.scatter(xArr,yArr,zArr,color = 'b')
 	plt.show()
 
-
+# OBSOLETE. An original representation that plotted the points representing the track in 3d 
+# with a drop down line to height 0. Subsequent iterations caused us to choose a different
+# representation
 def create3D(centerPoints):
 	for index in range(len(xPoints)):
 		zPoints.append(getHeight(xPoints[index],yPoints[index],centerPoints))
@@ -109,6 +119,7 @@ def create3D(centerPoints):
 
 	plt.show()
 
+# Marks a given coordinates and its neighbors white in an image
 def fillPoint(row,col,image):
 	row = min(row,image.shape[0]-6)
 	col = min(col,image.shape[1]-6)
@@ -119,6 +130,10 @@ def fillPoint(row,col,image):
 		for y in range(-2,3):
 			image[row + x][col+y] = 255
 
+# From a given point with a given angle, extend upon that ray until finding the first filled in pixel.
+# Fill in points in white until hitting the first white pixel. This is the integral part of Radial
+# Edge Detection as checking multiple rays in radial manner will find all the surrounding edges of the 
+# race track. 
 def checkRay(point,edgeImage,image,angle):
 	xMax = image.shape[0]
 	yMax = image.shape[1]
@@ -134,18 +149,13 @@ def checkRay(point,edgeImage,image,angle):
 		x+=math.sin(angle)
 		y+=math.cos(angle)
 
+# This algorithm acts similar to radar, finding the nearest object around it radially.
+# Proceeding in a circle around a given point, it finds the first colored pixel in all directions around it.
 def radialEdgeDetection(point,edgeImage,image):
-	# check0(point,edgeImage,image)
-	# check45(point,edgeImage,image)
-	# check90(point,edgeImage,image)
-	# check135(point,edgeImage,image)
-	# check180(point,edgeImage,image)
-	# check225(point,edgeImage,image)
-	# check270(point,edgeImage,image)
-	# check315(point,edgeImage,image)
 	for angle in range(0,360,1):
 		checkRay(point,edgeImage,image,math.radians(angle))
 
+# For each car coordinate, calls Radial Edge Detection to find the surrounding edges
 def getEdges(image, centerPoints):
 	edgeImage = np.zeros(image.shape)
 	for point in centerPoints:

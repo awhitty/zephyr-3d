@@ -6,9 +6,11 @@ import math
 # points on an image and getting gps elevation data. This combines the two
 # data sets so that they are in one file
 
-f1 = open("SkylineInterpolatedCenterPoints.txt","r")
-f2 = open("SkylineInterpolatedGPS.txt","r")
-f3 = open("SkylineInterpolated.txt","w")
+name = "Skyline"
+
+f1 = open(name + "InterpolatedCenterPoints.txt","r")
+f2 = open(name + "InterpolatedGPS.txt","r")
+f3 = open(name + "Interpolated.txt","w")
 
 lines = []
 

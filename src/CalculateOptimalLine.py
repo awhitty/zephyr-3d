@@ -19,6 +19,7 @@ name = ''
 
 XYZPoints = []
 
+# Colors a given point of an image and its neighbors white
 def fillPoint(row,col,height,image):
 	global XYZPoints
 	for x in range(-2,3):
@@ -28,6 +29,8 @@ def fillPoint(row,col,height,image):
 			image[row + x][col+y][1] = 255
 			image[row + x][col+y][2] = 255
 
+# Algorithm to calculate curvature of a series of points by calculating the angle
+# formed by three points.
 def calculateCurvature(linePoints):
 	curvatureSum = 0
 	lastChange = 1
@@ -56,11 +59,14 @@ def calculateCurvature(linePoints):
 			currentChange += 1
 	return curvatureSum
 
+# Outputs the points making up the optimal line to an xyz file to make an object for 
+# the iOS app
 def writeXYZ():
 	f = open(name + 'BestLine.xyz', 'w')
 	for point in XYZPoints:
 		f.write(str(point[0]) + " "+ str(point[1]) + " " + str(point[2])+"\n")
 
+# Used for debugging, shows the optimal line in an image
 def displayLine(line,im):
 	for point in line:
 		fillPoint(int(point[0]),int(point[1]),point[2],im)
@@ -70,6 +76,9 @@ def displayLine(line,im):
 	writeXYZ()
 	cv2.imwrite(name + "BestLine.jpg",im)
 
+# Algorithm used to determine whether the current section of the track compromises
+# a turn, and which direction it is turning. A turn occurs when all the cross sections
+# in question are either decreasing or increasing.
 def inTurn(angles):
 	isInRightTurn = True
 	for index in range(1,len(angles)):
@@ -81,6 +90,10 @@ def inTurn(angles):
 	if isInLeftTurn: return 1
 	return 0
 
+# Calculates the probabilities to be used in the random walk to find the best
+# line. This heuristic represents expert racing knowledge about how best to 
+# take corners, starting wide, cutting in during the turn to hit the apex, 
+# and then swinging wide again.
 def calculateWeights(crossSections,index,position):
 	if index < 10 or index > len(crossSections)-11:
 		return [.2,.6,.2]
@@ -117,6 +130,9 @@ def calculateWeights(crossSections,index,position):
 		else:
 			return [.2,.6,.2]
 
+# Mainly used for debugging, deterministic actions during turns takes the previous
+# heuristics and makes them rules. Can be used to quickly test how the algorithm will 
+# approximately work.
 def calculateTestWeights(crossSections,index,position):
 	if index < 10 or index > len(crossSections)-11:
 		return [.2,.6,.2]
@@ -153,7 +169,7 @@ def calculateTestWeights(crossSections,index,position):
 		else:
 			return [0,1,0]
 
-
+# Smooths the line so that it won't zig and zag
 def smoothLine(line):
 	bestLineX = []
 	bestLineY = []
@@ -171,6 +187,10 @@ def smoothLine(line):
 		smoothLine.append((x2[index],y2[index],z2[index]))
 	return smoothLine
 
+# This is the main algorithm for calculating the best line. This algorithm uses an a* heuristic in order to 
+# search on a limited output space and find the best line more quickly. A random walk search is used to see what
+# the cost of given lines are. For each walk, the curvature is calculated, and then compared to the current best line
+# and at the end of the iterations, the best line is returned.
 def calculateOptimal(crossSections,im):
 	bestLine = []
 	bestCurvature = float("inf")

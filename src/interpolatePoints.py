@@ -4,9 +4,10 @@ import math
 
 circularTrack = False
 name = "Skyline"
+pointsType = "CenterPoints"
 
 # This script takes a list of temporally ordered car coordinates and interpolates and smooths these points
-f = open(name + "CenterPoints.txt","r")
+f = open(name + pointsType + ".txt","r")
 xTempArr = []
 yTempArr = []
 zTempArr = []
@@ -50,7 +51,7 @@ y3 = gaussian_filter1d(yArr, sigma)
 z3 = gaussian_filter1d(zArr, sigma)
 
 
-f2 = open(name + "InterpolatedCenterPoints.txt","w")
+f2 = open(name + "Interpolated"+pointsType+".txt","w")
 nums = range(len(x3))
 
 # get rid of added padding if circular track

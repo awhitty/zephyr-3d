@@ -59,9 +59,9 @@ def displayCrossSections(crossSections, img, name):
 		xArr2.append(x2)
 		yArr1.append(y1)
 		yArr2.append(y2)
-	cv2.imwrite("centerPoints.jpg",img)
-	cv2.imwrite("centerPoints2.jpg",img2)
-	cv2.imwrite("centerPoints3.jpg",img3)
+	cv2.imwrite("CrossSectionsOverlay.jpg",img)
+	cv2.imwrite("CrossSections.jpg",img2)
+	cv2.imwrite("CrossSectionsSparse.jpg",img3)
 
 # Plots a 3d representation of the track based on the cross section edges. This is a very sparse model
 # that only includes two lines, one for each edge of the track, so it renders very quickly and is easily 
